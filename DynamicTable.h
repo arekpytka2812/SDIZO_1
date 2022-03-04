@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <chrono>
-
+#include <fstream>
 
 namespace DT{
 
@@ -13,15 +13,17 @@ namespace DT{
         int* table = {nullptr};
         int size = {0};
 
-        int amountOfSamples = 10;
+        int amountOfSamples = 6;
+
+        std::fstream* file = nullptr;
 
         long long addFront(int*);
         long long addMiddle(int, int);
         long long addEnd(int*);
 
-        long long deleteFront(int);
+        long long deleteFront();
         long long deleteMiddle(int);
-        long long deleteEnd(int);
+        long long deleteEnd();
 
         int* prepareSamples();
 
@@ -38,9 +40,6 @@ namespace DT{
         ~DynamicTable();
 
         void menu();
-
-
-
     };
 
 }
