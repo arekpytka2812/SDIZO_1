@@ -1,6 +1,15 @@
-#include <iostream>
+#include "DynamicTable.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+    srand(time(nullptr));
+
+    auto* table = new DT::DynamicTable(2);
+
+    table -> menu();
+
+    delete table;
+
     return 0;
 }
+
