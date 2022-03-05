@@ -9,14 +9,6 @@ DT::DynamicTable::DynamicTable(int size_):size(size_) {
 
     for(int i = 0; i < size; i++)
         table[i] = i+1;
-
-//    file = new std::fstream;
-//    file->open("debug.txt", std::ios::in | std::ios::out);
-//
-//    if(file->good()){
-//
-//    }
-
 }
 
 DT::DynamicTable::~DynamicTable() {
@@ -38,11 +30,9 @@ long long DT::DynamicTable::addFront(int* elements) {
         for(int i = amountOfSamples - 1, j = 0; i >= 0; i--, j++)
             tempTable[i] = {elements[j]};
 
-
         delete[] table;
-        table = new int[newSize];
         table = tempTable;
-        delete[] tempTable;
+        tempTable = nullptr;
 
         size = {newSize};
 
@@ -52,7 +42,32 @@ long long DT::DynamicTable::addFront(int* elements) {
 }
 
 long long DT::DynamicTable::addMiddle(int element, int position) {
-    return 0;
+
+    const auto start = std::chrono::steady_clock::now();
+
+    auto tempTable = new int[size + 1];
+
+    for(int i = 0; i < position - 1; i++)
+        tempTable[i] = table[i];
+
+    tempTable[position - 1] = element;
+
+    for(int i = position; i < size + 1; i++)
+        tempTable[i] = table[i - 1];
+
+    delete[] table;
+    table = tempTable;
+    tempTable = nullptr;
+
+    size++;
+
+    for(int i = 0; i < size; i++)
+        std::cout << table[i] << " ";
+
+    const auto end = std::chrono::steady_clock::now();
+
+    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+
 }
 
 long long DT::DynamicTable::addEnd(int* elements) {
@@ -70,9 +85,9 @@ long long DT::DynamicTable::addEnd(int* elements) {
         tempTable[i] = elements[j];
 
     delete[] table;
-    table = new int[newSize];
+
     table = tempTable;
-    delete[] tempTable;
+    tempTable = nullptr;
 
     size = newSize;
 
@@ -91,9 +106,8 @@ long long DT::DynamicTable::deleteFront() {
         tempTable[i - 1] = table[i];
 
     delete[] table;
-    table = new int[size - 1];
     table = tempTable;
-    delete[] tempTable;
+    tempTable = nullptr;
 
     size--;
 
@@ -115,9 +129,8 @@ long long DT::DynamicTable::deleteMiddle(int position) {
         tempTable[i] = table[i+1];
 
     delete[] table;
-    table = new int[size - 1];
     table = tempTable;
-    delete[] tempTable;
+    tempTable = nullptr;
 
     size--;
 
@@ -130,8 +143,14 @@ long long DT::DynamicTable::deleteEnd() {
 
     const auto start = std::chrono::steady_clock::now();
 
-    delete &table[size - 1];
+    auto tempTable = new int[size - 1];
 
+    for(int i = 0; i < size - 1; i++)
+        tempTable[i] = table[i];
+
+    delete[] table;
+    table = tempTable;
+    tempTable = nullptr;
     size--;
 
     const auto end = std::chrono::steady_clock::now();
@@ -169,7 +188,7 @@ void DT::DynamicTable::addElement() {
             break;
 
         case 2:
-          //  duration = addMiddle(tempSamplesTable, 3);
+            duration = addMiddle(6, 3);
             break;
 
         case 3:
@@ -247,6 +266,7 @@ void DT::DynamicTable::menu() {
     int tempChoice = 0;
 
     while(true){
+
         std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
         std::cin >> tempChoice;
 

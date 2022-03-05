@@ -4,7 +4,9 @@ int main() {
 
     srand(time(nullptr));
 
-    auto* table = new DT::DynamicTable(6);
+    auto table = new DT::DynamicTable(5);
+
+    DT::DynamicTable dynamicTable;
 
     table -> menu();
 

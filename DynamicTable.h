@@ -13,9 +13,7 @@ namespace DT{
         int* table = {nullptr};
         int size = {0};
 
-        int amountOfSamples = 6;
-
-        std::fstream* file = nullptr;
+        int amountOfSamples = 3;
 
         long long addFront(int*);
         long long addMiddle(int, int);
@@ -46,4 +44,4 @@ namespace DT{
 
 
 
-#endif //SDIZO_1_DYNAMICTABLE_H
+#endif
