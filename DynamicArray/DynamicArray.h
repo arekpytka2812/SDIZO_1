@@ -1,5 +1,5 @@
-#ifndef SDIZO_1_DYNAMICTABLE_H
-#define SDIZO_1_DYNAMICTABLE_H
+#ifndef SDIZO_1_DYNAMICARRAY_H
+#define SDIZO_1_DYNAMICARRAY_H
 
 #include <cstdlib>
 #include <iostream>
@@ -8,7 +8,7 @@
 
 namespace DT{
 
-    class DynamicTable {
+    class DynamicArray {
 
         int* table = {nullptr};
         int size = {0};
@@ -33,9 +33,9 @@ namespace DT{
 
     public:
 
-        DynamicTable();
-        explicit DynamicTable(int);
-        ~DynamicTable();
+        DynamicArray();
+        explicit DynamicArray(int);
+        ~DynamicArray();
 
         void menu();
     };
