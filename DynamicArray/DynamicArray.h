@@ -6,7 +6,7 @@
 #include <chrono>
 #include <fstream>
 
-namespace DT{
+
 
     class DynamicArray {
 
@@ -14,6 +14,8 @@ namespace DT{
         int size = {0};
 
         int amountOfSamples = 3;
+
+        int& operator[](int);
 
         long long addFront(int*);
         long long addMiddle(int, int);
@@ -40,7 +42,7 @@ namespace DT{
         void menu();
     };
 
-}
+
 
 
 

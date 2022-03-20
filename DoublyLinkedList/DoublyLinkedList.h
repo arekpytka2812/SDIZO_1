@@ -5,8 +5,6 @@
 #include <iostream>
 #include <chrono>
 
-namespace DLL{
-
     class ListElement{
         int value {0};
 
@@ -16,9 +14,14 @@ namespace DLL{
     public:
         ListElement();
         ListElement(int, ListElement*, ListElement*);
+        ListElement(int, ListElement, ListElement);
+
+
 
         [[nodiscard]] int getValue() const{
-            return value;
+            if(this != nullptr)
+                return value;
+            return -1;
         }
 
         [[nodiscard]] ListElement* getNext() const{
@@ -37,7 +40,7 @@ namespace DLL{
             previous = previous_;
         }
 
-        ListElement* getNext(){
+        [[nodiscard]] ListElement* getNext(){
             return next;
         }
 
@@ -51,23 +54,26 @@ namespace DLL{
 
     public:
 
+        ListElement& operator[](int);
+
         void addFront(int);
-        long addMiddle(int, int);
-        long addEnd(int);
+        void addMiddle(int, int);
+        void addEnd(int);
 
-        long deleteFront();
-        long deleteMiddle(int);
-        long deleteEnd();
+        void deleteFront();
+        void deleteMiddle(int);
+        void deleteEnd();
 
-        ListElement* operator[](int) override;
+        int search(int);
 
+        void displayList();
 
         DoublyLinkedList();
     };
 
 
 
-}
+
 
 
 

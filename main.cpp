@@ -3,23 +3,14 @@
 
 int main() {
 
-    srand(time(nullptr));
-
-    auto table = new DT::DynamicArray(5);
-
-    DT::DynamicArray dynamicTable;
-
-    table -> menu();
-
-    delete table;
-
-    auto list = new DLL::DoublyLinkedList;
+    auto list = new DoublyLinkedList;
 
     for(int i = 0; i < 5; i++)
-        list->addFront(i);
+        list->addMiddle(i, i);
 
-    for(int i = 0; i < 5; i++)
-        std::cout << list->getList()[i]->getValue() << std::endl;
+    list->displayList();
+
+    std::cout << list->search(2);
 
     return 0;
 }

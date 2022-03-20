@@ -1,22 +1,33 @@
 #include "DynamicArray.h"
 
-DT::DynamicArray::DynamicArray() {
-
+DynamicArray::DynamicArray() {
 }
 
-DT::DynamicArray::DynamicArray(int size_):size(size_) {
+DynamicArray::DynamicArray(int size_):size(size_) {
     table = {new int[size]};
 
     for(int i = 0; i < size; i++)
         table[i] = i+1;
 }
 
-DT::DynamicArray::~DynamicArray() {
+DynamicArray::~DynamicArray() {
     delete(table);
     size = {0};
 }
 
-long long DT::DynamicArray::addFront(int* elements) {
+int& DynamicArray::operator[](int position) {
+
+    if(position >= size)
+        throw std::out_of_range("You are out of range!");
+
+    else{
+        std::cout << "bambasiak";
+        return *(table+position);
+    }
+
+}
+
+long long DynamicArray::addFront(int* elements) {
 
         const auto start = std::chrono::high_resolution_clock::now();
 
@@ -41,7 +52,7 @@ long long DT::DynamicArray::addFront(int* elements) {
         return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DT::DynamicArray::addMiddle(int element, int position) {
+long long DynamicArray::addMiddle(int element, int position) {
 
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -70,7 +81,7 @@ long long DT::DynamicArray::addMiddle(int element, int position) {
 
 }
 
-long long DT::DynamicArray::addEnd(int* elements) {
+long long DynamicArray::addEnd(int* elements) {
 
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -96,7 +107,7 @@ long long DT::DynamicArray::addEnd(int* elements) {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DT::DynamicArray::deleteFront() {
+long long DynamicArray::deleteFront() {
 
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -116,7 +127,7 @@ long long DT::DynamicArray::deleteFront() {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DT::DynamicArray::deleteMiddle(int position) {
+long long DynamicArray::deleteMiddle(int position) {
 
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -139,7 +150,7 @@ long long DT::DynamicArray::deleteMiddle(int position) {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DT::DynamicArray::deleteEnd() {
+long long DynamicArray::deleteEnd() {
 
     const auto start = std::chrono::high_resolution_clock::now();
 
@@ -158,7 +169,7 @@ long long DT::DynamicArray::deleteEnd() {
     return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-int* DT::DynamicArray::prepareSamples() {
+int* DynamicArray::prepareSamples() {
 
     auto tempTable = new int[amountOfSamples];
 
@@ -170,7 +181,7 @@ int* DT::DynamicArray::prepareSamples() {
     return tempTable;
 }
 
-void DT::DynamicArray::addElement() {
+void DynamicArray::addElement() {
 
     int* tempSamplesTable = {prepareSamples()};
     int tempChoice = {0};
@@ -202,7 +213,7 @@ void DT::DynamicArray::addElement() {
 
 }
 
-void DT::DynamicArray::deleteElement() {
+void DynamicArray::deleteElement() {
 
     int tempSample = {rand() % 1024};
     int tempChoice = {0};
@@ -232,7 +243,7 @@ void DT::DynamicArray::deleteElement() {
 
 }
 
-void DT::DynamicArray::searchElement() {
+void DynamicArray::searchElement() {
 
     int element;
 
@@ -255,13 +266,13 @@ void DT::DynamicArray::searchElement() {
 
 }
 
-void DT::DynamicArray::drawTable(){
+void DynamicArray::drawTable(){
 
     for(int i = 0; i < size; i++)
         std::cout << table[i] << "\n";
 }
 
-void DT::DynamicArray::menu() {
+void DynamicArray::menu() {
 
     int tempChoice = 0;
 
