@@ -1,6 +1,8 @@
 #ifndef SDIZO_1_DYNAMICARRAY_H
 #define SDIZO_1_DYNAMICARRAY_H
 
+#include "../DataStructure.h"
+
 #include <cstdlib>
 #include <iostream>
 #include <chrono>
@@ -8,7 +10,7 @@
 
 
 
-    class DynamicArray {
+    class DynamicArray : public DataStructure{
 
         int* table = {nullptr};
         int size = {0};

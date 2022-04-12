@@ -1,6 +1,8 @@
 #ifndef SDIZO_1_DOUBLYLINKEDLIST_H
 #define SDIZO_1_DOUBLYLINKEDLIST_H
 
+#include "../DataStructure.h"
+
 #include <cstdlib>
 #include <iostream>
 #include <chrono>
@@ -46,7 +48,7 @@
 
     };
 
-    class DoublyLinkedList {
+    class DoublyLinkedList : public DataStructure {
 
         int size = 0;
         ListElement* head {nullptr};

@@ -17,11 +17,10 @@ DynamicArray::~DynamicArray() {
 
 int& DynamicArray::operator[](int position) {
 
-    if(position >= size)
+    if(position < 0 && position >= size)
         throw std::out_of_range("You are out of range!");
 
     else{
-        std::cout << "bambasiak";
         return *(table+position);
     }
 

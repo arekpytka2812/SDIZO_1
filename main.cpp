@@ -1,16 +1,25 @@
-#include "DynamicArray/DynamicArray.h"
-#include "DoublyLinkedList/DoublyLinkedList.h"
+#include "main.h"
+
 
 int main() {
 
-    auto list = new DoublyLinkedList;
+    int size = 5;
+    int* tempTable = new int[size];
 
-    for(int i = 0; i < 5; i++)
-        list->addMiddle(i, i);
+    tempTable[0] = 4;
+    tempTable[1] = 6;
+    tempTable[2] = 1;
+    tempTable[3] = 8;
+    tempTable[4] = 23;
 
-    list->displayList();
+    BinaryHeap heap(size, tempTable);
 
-    std::cout << list->search(2);
+    heap.deleteElement(1);
+
+    heap.addElement(345);
+    heap.addElement(35);
+    heap.addElement(36768);
+    heap.addElement(3905);
 
     return 0;
 }

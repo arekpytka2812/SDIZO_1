@@ -15,6 +15,8 @@ ListElement::ListElement(int value_, ListElement* previous_, ListElement* next_)
 
     if(previous_ != nullptr)
         previous_ ->setNext(this);
+
+
 }
 
 //////////////////////////////
@@ -22,7 +24,7 @@ ListElement::ListElement(int value_, ListElement* previous_, ListElement* next_)
 //////////////////////////////
 
 DoublyLinkedList::DoublyLinkedList(){
-
+    fileManager = new FileManager("DoublyLinkedList");
 }
 
 ListElement& DoublyLinkedList::operator[](int pos) {
