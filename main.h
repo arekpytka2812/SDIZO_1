@@ -7,5 +7,6 @@
 #include "Utility/FileManager.h"
 #include "Utility/Timer.h"
 
+#include <time.h>
 
 #endif

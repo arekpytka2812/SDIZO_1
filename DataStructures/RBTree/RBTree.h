@@ -6,7 +6,6 @@
 class TreeElement{
 
     int value {0};
-    std::string color;
 
     TreeElement* left {nullptr};
     TreeElement* right {nullptr};
@@ -15,18 +14,28 @@ class TreeElement{
 
 public:
 
+    enum Color{
+        RED, BLACK
+    };
+
+    Color color;
+
     TreeElement();
-    TreeElement(int, std::string);
+    TreeElement(int, Color);
     ~TreeElement();
 
 };
 
 class RBTree : public DataStructure{
 
+    TreeElement* root {nullptr};
+
+    void rotateLeft();
+    void rotateRight();
+
 public:
 
     TreeElement& operator[](int);
-
 };
 
 

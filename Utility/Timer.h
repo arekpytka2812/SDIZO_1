@@ -2,6 +2,7 @@
 #define SDIZO_1_TIMER_H
 
 #include <chrono>
+#include <iostream>
 
 
 class Timer {
@@ -10,25 +11,27 @@ class Timer {
     std::chrono::high_resolution_clock::time_point operationEnd;
 
     bool isTimerStarted = false;
-    bool hasTimerFinished = false;
-
-    long getDuration(){
-        return std::chrono::duration_cast<std::chrono::microseconds>(operationEnd - operationStart).count();
-    }
+    bool hasTimerFinished = true;
 
 public:
 
     Timer();
 
     void setTimer(){
-        if(!isTimerStarted && hasTimerFinished) {
+        if(not isTimerStarted and hasTimerFinished) {
             operationStart = std::chrono::high_resolution_clock::now();
             isTimerStarted = true;
+            hasTimerFinished = false;
         }
-        else{
+        else if(isTimerStarted and not hasTimerFinished){
             operationEnd = std::chrono::high_resolution_clock::now();
-
+            isTimerStarted = false;
+            hasTimerFinished = true;
         }
+    }
+
+    double getDuration(){
+        return std::chrono::duration_cast<std::chrono::microseconds>(operationEnd - operationStart).count();
     }
 
 };

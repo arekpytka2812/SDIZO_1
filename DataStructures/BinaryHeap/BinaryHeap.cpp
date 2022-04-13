@@ -1,14 +1,16 @@
 #include "BinaryHeap.h"
 
-
-
 BinaryHeap::BinaryHeap(){
-
+    fileManager = new FileManager("BinaryHeap");
+    timer = new Timer;
 }
 
 BinaryHeap::BinaryHeap(int size_, int* table_) {
     this->size = size_;
     this->table = table_;
+
+    fileManager = new FileManager("BinaryHeap");
+    timer = new Timer;
 
     buildHeap();
 }
@@ -46,6 +48,8 @@ void BinaryHeap::buildHeap() {
 
 void BinaryHeap::addElement(int value) {
 
+
+
     size++;
     auto tempTable = new int[size];
 
@@ -73,9 +77,11 @@ void BinaryHeap::deleteElement(int value) {
 int BinaryHeap::searchElement(int value) {
 
     for(int i = 0; i < size; i++){
-        if(table[i] == value)
+        if(table[i] == value){
             return i;
+        }
     }
+    return -1;
 }
 
 void BinaryHeap::printHeap(){

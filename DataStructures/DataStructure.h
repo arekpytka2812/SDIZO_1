@@ -9,8 +9,10 @@ class DataStructure {
 
 protected:
 
-    Timer timer;
-    FileManager* fileManager = nullptr;
+    Timer* timer {nullptr};
+    FileManager* fileManager {nullptr};
+
+    std::vector<double> measurements;
 
     DataStructure();
 

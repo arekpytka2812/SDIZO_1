@@ -1,19 +1,17 @@
 #include "RBTree.h"
 
-
-
 TreeElement::TreeElement() {
 
 }
 
-TreeElement::TreeElement(int value_, std::string color_) {
+TreeElement::TreeElement(int value_, Color color_ = BLACK) {
     this->value = value_;
     this->color = color_;
 }
 
 TreeElement::~TreeElement() {
     this->value = 0;
-    this->color = "bruh";
+    this->color = RED;
 }
 
 ////////////////////

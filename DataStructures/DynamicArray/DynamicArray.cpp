@@ -1,9 +1,13 @@
 #include "DynamicArray.h"
 
 DynamicArray::DynamicArray() {
+    fileManager = new FileManager("DynamicArray");
 }
 
 DynamicArray::DynamicArray(int size_):size(size_) {
+
+    fileManager = new FileManager("DynamicArray");
+
     table = {new int[size]};
 
     for(int i = 0; i < size; i++)

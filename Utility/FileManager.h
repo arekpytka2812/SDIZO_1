@@ -9,19 +9,26 @@
 class FileManager {
 
     std::string dataType;
-    std::fstream file;
+    std::fstream dataFile;
+    std::fstream logFile;
 
-    std::experimental::filesystem::path* dataPath {nullptr};
-    std::experimental::filesystem::path* logFilePath {nullptr};
+    std::string dataPath;
+    std::string logFilePath;
 
-    int amountOfData;
+    int amountOfData[5] = {1000, 2000, 5000, 10000, 20000};
+    int amountCounter {0};
 
-    bool isFileExisted();
+    bool isDirectoryCreated(int);
+    bool isFileCreated(int);
+
+    void prepareSamples();
 
 public:
     FileManager(std::string);
+    ~FileManager();
 
-
+    void writeToFile(int, long long);
+    int readData();
 
 };
 
