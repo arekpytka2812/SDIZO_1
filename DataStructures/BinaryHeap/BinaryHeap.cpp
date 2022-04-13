@@ -32,10 +32,6 @@ void BinaryHeap::heapify(int i) {
     if(largest != i){
         std::swap(table[i], table[largest]);
 
-        std::cout << i << "\n";
-        printHeap();
-        std::cout << "\n";
-
         heapify(largest);
     }
 }
@@ -60,26 +56,18 @@ void BinaryHeap::addElement(int value) {
 
     delete[] table;
     table = tempTable;
-    heapify((size / 2) - 1);
+    buildHeap();
 }
 
 void BinaryHeap::deleteElement(int value) {
 
     auto elementPosition = searchElement(value);
 
+    std::swap(table[elementPosition], table[size - 1]);
+
     size--;
-    auto tempTable = new int[size];
 
-    for(int i = 0; i < elementPosition; i++)
-        tempTable[i] = table[i];
-
-    for(int i = elementPosition; i < size; i++)
-        tempTable[i] = table[i+1];
-
-    delete[] table;
-    table = tempTable;
-
-    heapify(elementPosition);
+    buildHeap();
 }
 
 int BinaryHeap::searchElement(int value) {

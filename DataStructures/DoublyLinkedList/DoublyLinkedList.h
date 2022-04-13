@@ -16,7 +16,6 @@
     public:
         ListElement();
         ListElement(int, ListElement*, ListElement*);
-        ListElement(int, ListElement, ListElement);
 
 
 

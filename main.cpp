@@ -4,7 +4,7 @@
 int main() {
 
     int size = 5;
-    int* tempTable = new int[size];
+    auto tempTable = new int[size];
 
     tempTable[0] = 4;
     tempTable[1] = 6;
@@ -14,12 +14,11 @@ int main() {
 
     BinaryHeap heap(size, tempTable);
 
+    heap.printHeap();
+
     heap.deleteElement(1);
 
-    heap.addElement(345);
-    heap.addElement(35);
-    heap.addElement(36768);
-    heap.addElement(3905);
+    heap.printHeap();
 
     return 0;
 }
