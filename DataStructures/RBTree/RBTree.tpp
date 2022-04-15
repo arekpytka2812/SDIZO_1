@@ -6,9 +6,9 @@ TreeElement<T>::TreeElement() {
 }
 
 template<typename T>
-TreeElement<T>::TreeElement(T value_, Color color_) {
-    this->value = value_;
-    this->color = color_;
+TreeElement<T>::TreeElement(T value_, Color color_, TreeElement<T>* left_, TreeElement<T>* right_)
+: value(value_), color(color_), left(left_), right(right_) {
+
 }
 
 template<typename T>
@@ -37,18 +37,31 @@ void TreeElement<T>::setColor(Color color_){
 ////////////////////
 
 template<typename T>
-void RBTree<T>::BstInsert(int value) {
+void RBTree<T>::bstInsert(const T value) {
 
     auto tempElement = root;
 
-    while(tempElement != &guardian){
-
+    if(size == 0){
+        root = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
+        return;
     }
 
+    while(tempElement != &guardian){
+        if(value < tempElement->getValue())
+            tempElement = tempElement->getLeft();
+        if(value > tempElement->getValue())
+            tempElement = tempElement->getRight();
+    }
+
+    tempElement = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
+    size++;
 }
 
 template<typename T>
 RBTree<T>::RBTree() {
+
+    this->fileManager = new FileManager("RBTree");
+    this->timer = new Timer;
 
     guardian.setGuardian();
 

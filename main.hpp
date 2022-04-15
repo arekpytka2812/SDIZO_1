@@ -8,6 +8,8 @@
 #include "DataStructures/DoublyLinkedList/DoublyLinkedList.tpp"
 #include "DataStructures/BinaryHeap/BinaryHeap.hpp"
 #include "DataStructures/BinaryHeap/BinaryHeap.tpp"
+#include "DataStructures/RBTree/RBTree.hpp"
+#include "DataStructures/RBTree/RBTree.tpp"
 #include "Utility/FileManager.h"
 #include "Utility/Timer.h"
 

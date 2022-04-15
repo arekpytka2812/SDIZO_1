@@ -3,7 +3,11 @@
 int main() {
 
     srand(time(nullptr));
-    DynamicArray<int> dynamicArray;
+
+    RBTree<int> rbTree;
+
+    rbTree.bstInsert(12);
+
 
     return 0;
 }

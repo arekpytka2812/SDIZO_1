@@ -21,7 +21,7 @@ public:
     Color color;
 
     TreeElement();
-    TreeElement(T, Color);
+    TreeElement(T, Color,TreeElement<T>*, TreeElement<T>*);
     ~TreeElement();
 
     void setGuardian();
@@ -49,9 +49,9 @@ class RBTree : public DataStructure<T>{
     TreeElement<T>* root {nullptr};
     int size {0};
 
-    void BstInsert(int);
-
 public:
+
+    void bstInsert(T);
 
     RBTree();
 
@@ -63,6 +63,8 @@ public:
     void addElement(T);
     void deleteElement(T);
     TreeElement<T>* searchElement(T);
+
+    void printTree();
 };
 
 
