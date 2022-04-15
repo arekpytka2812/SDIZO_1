@@ -15,15 +15,16 @@ class FileManager {
     std::string dataPath;
     std::string logFilePath;
 
-    int amountOfData[5] = {1000, 2000, 5000, 10000, 20000};
-    int amountCounter {0};
-
     bool isDirectoryCreated(int);
     bool isFileCreated(int);
 
     void prepareSamples();
 
 public:
+
+    const int amountOfData[5] = {1000, 2000, 5000, 10000, 20000};
+    int amountCounter {0};
+
     FileManager(std::string);
     ~FileManager();
 

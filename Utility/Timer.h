@@ -4,7 +4,6 @@
 #include <chrono>
 #include <iostream>
 
-
 class Timer {
 
     std::chrono::high_resolution_clock::time_point operationStart;
@@ -19,6 +18,7 @@ public:
 
     void setTimer(){
         if(not isTimerStarted and hasTimerFinished) {
+            std::cout << "chuj";
             operationStart = std::chrono::high_resolution_clock::now();
             isTimerStarted = true;
             hasTimerFinished = false;
@@ -31,7 +31,7 @@ public:
     }
 
     double getDuration(){
-        return std::chrono::duration_cast<std::chrono::microseconds>(operationEnd - operationStart).count();
+        return std::chrono::duration<double>(operationEnd - operationStart).count();
     }
 
 };

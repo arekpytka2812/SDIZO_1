@@ -14,10 +14,23 @@ TreeElement::~TreeElement() {
     this->color = RED;
 }
 
+void TreeElement::setGuard() {
+    this->value = 0;
+    this->color = BLACK;
+
+    this->left = this;
+    this->right = this;
+    this->parent = this;
+}
+
 ////////////////////
 ////// RBTree //////
 ////////////////////
 
-TreeElement& RBTree::operator[](int position) {
+RBTree::RBTree() {
+
+    guard.setGuard();
+
+    root = &guard;
 
 }

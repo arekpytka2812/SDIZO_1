@@ -2,16 +2,7 @@
 
 DynamicArray::DynamicArray() {
     fileManager = new FileManager("DynamicArray");
-}
-
-DynamicArray::DynamicArray(int size_):size(size_) {
-
-    fileManager = new FileManager("DynamicArray");
-
-    table = {new int[size]};
-
-    for(int i = 0; i < size; i++)
-        table[i] = i+1;
+    timer = new Timer;
 }
 
 DynamicArray::~DynamicArray() {
@@ -30,89 +21,64 @@ int& DynamicArray::operator[](int position) {
 
 }
 
-long long DynamicArray::addFront(int* elements) {
+void DynamicArray::addFront(int value) {
 
-        const auto start = std::chrono::high_resolution_clock::now();
+        timer->setTimer();
 
-        int newSize = {size + amountOfSamples};
+        size++;
 
-        auto tempTable = new int [newSize];
+        auto tempTable = new int [size];
 
-        for(int i = {newSize - 1}; i - amountOfSamples >= 0; i--)
-            tempTable[i] = {table[i - amountOfSamples]};
+        tempTable[0] = value;
 
-        for(int i = amountOfSamples - 1, j = 0; i >= 0; i--, j++)
-            tempTable[i] = {elements[j]};
+        for(int i = 1; i < size; i++)
+            tempTable[i] = table[i - 1];
 
         delete[] table;
         table = tempTable;
         tempTable = nullptr;
 
-        size = {newSize};
-
-        const auto end = std::chrono::high_resolution_clock::now();
-
-        return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        timer->setTimer();
 }
 
-long long DynamicArray::addMiddle(int element, int position) {
+void DynamicArray::addMiddle(int value, int position) {
 
-    const auto start = std::chrono::high_resolution_clock::now();
+    size++;
 
-    auto tempTable = new int[size + 1];
+    auto tempTable = new int[size];
 
     for(int i = 0; i < position - 1; i++)
         tempTable[i] = table[i];
 
-    tempTable[position - 1] = element;
+    tempTable[position - 1] = value;
 
-    for(int i = position; i < size + 1; i++)
+    for(int i = position; i < size; i++)
         tempTable[i] = table[i - 1];
 
     delete[] table;
     table = tempTable;
     tempTable = nullptr;
 
-    size++;
-
-    for(int i = 0; i < size; i++)
-        std::cout << table[i] << " ";
-
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-
 }
 
-long long DynamicArray::addEnd(int* elements) {
+void DynamicArray::addEnd(int value) {
 
-    const auto start = std::chrono::high_resolution_clock::now();
+    size++;
 
-    int newSize = size + amountOfSamples;
-
-    auto tempTable = new int[newSize];
+    auto tempTable = new int[size];
 
     for(int i = 0; i < size; i++)
         tempTable[i] = table[i];
 
-    for(int i = size, j = 0; i < newSize; i++, j++)
-        tempTable[i] = elements[j];
+    tempTable[size - 1] = value;
 
     delete[] table;
-
     table = tempTable;
     tempTable = nullptr;
 
-    size = newSize;
-
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DynamicArray::deleteFront() {
-
-    const auto start = std::chrono::high_resolution_clock::now();
+void DynamicArray::deleteFront() {
 
     auto tempTable = new int[size - 1];
 
@@ -124,15 +90,9 @@ long long DynamicArray::deleteFront() {
     tempTable = nullptr;
 
     size--;
-
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DynamicArray::deleteMiddle(int position) {
-
-    const auto start = std::chrono::high_resolution_clock::now();
+void DynamicArray::deleteMiddle(int position) {
 
     auto tempTable = new int[size - 1];
 
@@ -147,15 +107,9 @@ long long DynamicArray::deleteMiddle(int position) {
     tempTable = nullptr;
 
     size--;
-
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
 }
 
-long long DynamicArray::deleteEnd() {
-
-    const auto start = std::chrono::high_resolution_clock::now();
+void DynamicArray::deleteEnd() {
 
     auto tempTable = new int[size - 1];
 
@@ -167,26 +121,10 @@ long long DynamicArray::deleteEnd() {
     tempTable = nullptr;
     size--;
 
-    const auto end = std::chrono::high_resolution_clock::now();
-
-    return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
-}
-
-int* DynamicArray::prepareSamples() {
-
-    auto tempTable = new int[amountOfSamples];
-
-    for(int i = 0; i < amountOfSamples; i++) {
-        tempTable[i] = rand() % 1024;
-        std::cout << std::endl << tempTable[i] << std::endl;
-    }
-
-    return tempTable;
 }
 
 void DynamicArray::addElement() {
 
-    int* tempSamplesTable = {prepareSamples()};
     int tempChoice = {0};
     long long duration = {0};
 
@@ -198,15 +136,15 @@ void DynamicArray::addElement() {
     switch(tempChoice){
 
         case 1:
-            duration = addFront(tempSamplesTable);
+          //  duration = addFront();
             break;
 
         case 2:
-            duration = addMiddle(6, 3);
+         //   duration = addMiddle(6, 3);
             break;
 
         case 3:
-            duration = addEnd(tempSamplesTable);
+          //  duration = addEnd();
             break;
     }
 
@@ -230,15 +168,15 @@ void DynamicArray::deleteElement() {
     switch(tempChoice){
 
         case 1:
-            duration = deleteFront();
+          //  duration = deleteFront();
             break;
 
         case 2:
-            duration = deleteMiddle(3);
+          //  duration = deleteMiddle(3);
             break;
 
         case 3:
-            duration = deleteEnd();
+          //  duration = deleteEnd();
             break;
     }
 
@@ -302,9 +240,6 @@ void DynamicArray::menu() {
                 return;
         }
     }
-
-
-
 }
 
 

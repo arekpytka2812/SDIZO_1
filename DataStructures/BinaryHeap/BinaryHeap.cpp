@@ -1,18 +1,15 @@
 #include "BinaryHeap.h"
 
+int& BinaryHeap::operator[](int position){
+    if(position < 0 or position >= size)
+        throw std::out_of_range("You are out of range!");
+    else
+        return *(table + position);
+}
+
 BinaryHeap::BinaryHeap(){
     fileManager = new FileManager("BinaryHeap");
     timer = new Timer;
-}
-
-BinaryHeap::BinaryHeap(int size_, int* table_) {
-    this->size = size_;
-    this->table = table_;
-
-    fileManager = new FileManager("BinaryHeap");
-    timer = new Timer;
-
-    buildHeap();
 }
 
 BinaryHeap::~BinaryHeap(){
@@ -48,7 +45,7 @@ void BinaryHeap::buildHeap() {
 
 void BinaryHeap::addElement(int value) {
 
-
+    timer->setTimer();
 
     size++;
     auto tempTable = new int[size];
@@ -61,6 +58,9 @@ void BinaryHeap::addElement(int value) {
     delete[] table;
     table = tempTable;
     buildHeap();
+
+    timer->setTimer();
+    std::cout << "\n" << timer->getDuration();
 }
 
 void BinaryHeap::deleteElement(int value) {
@@ -69,6 +69,14 @@ void BinaryHeap::deleteElement(int value) {
 
     std::swap(table[elementPosition], table[size - 1]);
 
+    auto tempTable = new int[size - 1];
+
+    for(int i = 0; i < size - 1; i++)
+        tempTable[i] = table[i];
+
+    delete[] table;
+    table = tempTable;
+    tempTable = nullptr;
     size--;
 
     buildHeap();

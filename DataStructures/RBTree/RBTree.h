@@ -11,7 +11,6 @@ class TreeElement{
     TreeElement* right {nullptr};
     TreeElement* parent {nullptr};
 
-
 public:
 
     enum Color{
@@ -24,18 +23,33 @@ public:
     TreeElement(int, Color);
     ~TreeElement();
 
+    void setGuard();
+
+    TreeElement* getLeft(){
+        return left;
+    }
+    TreeElement* getRight(){
+        return right;
+    }
+    TreeElement* getParent(){
+        return parent;
+    }
 };
 
 class RBTree : public DataStructure{
 
+    TreeElement guard;
     TreeElement* root {nullptr};
-
-    void rotateLeft();
-    void rotateRight();
+    int size {0};
 
 public:
 
+    RBTree();
+
     TreeElement& operator[](int);
+
+    void rotateLeft(TreeElement*);
+    void rotateRight(TreeElement*);
 };
 
 

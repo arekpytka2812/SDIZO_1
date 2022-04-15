@@ -10,12 +10,13 @@ class BinaryHeap: public DataStructure {
     int* table { nullptr };
     int size {0};
 
+    int& operator[](int);
+
     void heapify(int);
     void buildHeap();
 
 public:
     BinaryHeap();
-    BinaryHeap(int, int*);
     ~BinaryHeap();
 
 

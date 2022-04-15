@@ -10,7 +10,6 @@ bool FileManager::isDirectoryCreated(int whichOne) {
             return std::experimental::filesystem::is_directory(logFilePath);
             break;
     }
-
 }
 
 bool FileManager::isFileCreated(int whichOne) {
@@ -26,12 +25,14 @@ bool FileManager::isFileCreated(int whichOne) {
 }
 
 void FileManager::prepareSamples() {
-    dataFile << FileManager::amountOfData[amountCounter] << "\n";
 
     while(amountCounter < 5) {
+        dataFile << FileManager::amountOfData[amountCounter] << "\n";
+
         for (int i = 0; i < FileManager::amountOfData[amountCounter]; i++) {
             dataFile << rand() % 2048 << "\n";
         }
+
         amountCounter++;
         dataFile.flush();
     }
@@ -53,7 +54,7 @@ FileManager::FileManager(std::string dataType_){
     dataPath = "../DataToTest/" + dataType + "Data.txt";
     logFilePath = "../LogFiles/" + dataType + "Log.txt";
 
-    dataFile.open(dataPath.c_str(), std::fstream::out | std::fstream::trunc);
+    dataFile.open(dataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in);
     logFile.open(logFilePath.c_str(), std::fstream::out | std::fstream::trunc);
 
     prepareSamples();
@@ -99,7 +100,7 @@ void FileManager::writeToFile(int operation, long long timeValue) {
 }
 
 int FileManager::readData(){
-    std::string tempInt;
-    std::getline(dataFile, tempInt);
-    return -1;
+    int tempInt;
+    dataFile >> tempInt;
+    return tempInt;
 }
