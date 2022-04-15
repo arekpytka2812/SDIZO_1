@@ -1,10 +1,10 @@
-#ifndef SDIZO_1_DATASTRUCTURE_H
-#define SDIZO_1_DATASTRUCTURE_H
+#ifndef SDIZO_1_DATASTRUCTURE_HPP
+#define SDIZO_1_DATASTRUCTURE_HPP
 
 #include "../Utility/Timer.h"
 #include "../Utility/FileManager.h"
 
-
+template<typename T>
 class DataStructure {
 
 protected:
@@ -13,8 +13,6 @@ protected:
     FileManager* fileManager {nullptr};
 
     std::vector<double> measurements;
-
-    DataStructure();
 
 };
 

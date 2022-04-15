@@ -1,16 +1,22 @@
-#include "DynamicArray.h"
+#ifndef SDIZO_1_DYNAMICARRAY_TPP
+#define SDIZO_1_DYNAMICARRAY_TPP
 
-DynamicArray::DynamicArray() {
-    fileManager = new FileManager("DynamicArray");
-    timer = new Timer;
+#include "DynamicArray.hpp"
+
+template<typename T>
+DynamicArray<T>::DynamicArray() {
+    this->fileManager = new FileManager("DynamicArray");
+    this->timer = new Timer;
 }
 
-DynamicArray::~DynamicArray() {
-    delete(table);
+template<typename T>
+DynamicArray<T>::~DynamicArray() {
+    delete[] table;
     size = {0};
 }
 
-int& DynamicArray::operator[](int position) {
+template<typename T>
+T& DynamicArray<T>::operator[](int position) {
 
     if(position < 0 && position >= size)
         throw std::out_of_range("You are out of range!");
@@ -21,15 +27,16 @@ int& DynamicArray::operator[](int position) {
 
 }
 
-void DynamicArray::addFront(int value) {
+template<typename T>
+void DynamicArray<T>::addFront(T element) {
 
-        timer->setTimer();
+        this->timer->setTimer();
 
         size++;
 
-        auto tempTable = new int [size];
+        auto tempTable = new T [size];
 
-        tempTable[0] = value;
+        tempTable[0] = element;
 
         for(int i = 1; i < size; i++)
             tempTable[i] = table[i - 1];
@@ -38,19 +45,20 @@ void DynamicArray::addFront(int value) {
         table = tempTable;
         tempTable = nullptr;
 
-        timer->setTimer();
+        this->timer->setTimer();
 }
 
-void DynamicArray::addMiddle(int value, int position) {
+template<typename T>
+void DynamicArray<T>::addMiddle(T element, int position) {
 
     size++;
 
-    auto tempTable = new int[size];
+    auto tempTable = new T[size];
 
     for(int i = 0; i < position - 1; i++)
         tempTable[i] = table[i];
 
-    tempTable[position - 1] = value;
+    tempTable[position - 1] = element;
 
     for(int i = position; i < size; i++)
         tempTable[i] = table[i - 1];
@@ -61,16 +69,17 @@ void DynamicArray::addMiddle(int value, int position) {
 
 }
 
-void DynamicArray::addEnd(int value) {
+template<typename T>
+void DynamicArray<T>::addEnd(T element) {
 
     size++;
 
-    auto tempTable = new int[size];
+    auto tempTable = new T[size];
 
     for(int i = 0; i < size; i++)
         tempTable[i] = table[i];
 
-    tempTable[size - 1] = value;
+    tempTable[size - 1] = element;
 
     delete[] table;
     table = tempTable;
@@ -78,9 +87,10 @@ void DynamicArray::addEnd(int value) {
 
 }
 
-void DynamicArray::deleteFront() {
+template<typename T>
+void DynamicArray<T>::deleteFront() {
 
-    auto tempTable = new int[size - 1];
+    auto tempTable = new T[size - 1];
 
     for(int i = 1; i < size; i++)
         tempTable[i - 1] = table[i];
@@ -92,9 +102,10 @@ void DynamicArray::deleteFront() {
     size--;
 }
 
-void DynamicArray::deleteMiddle(int position) {
+template<typename T>
+void DynamicArray<T>::deleteMiddle(int position) {
 
-    auto tempTable = new int[size - 1];
+    auto tempTable = new T[size - 1];
 
     for(int i = 0; i < position - 1; i++)
         tempTable[i] = table[i];
@@ -109,9 +120,10 @@ void DynamicArray::deleteMiddle(int position) {
     size--;
 }
 
-void DynamicArray::deleteEnd() {
+template<typename T>
+void DynamicArray<T>::deleteEnd() {
 
-    auto tempTable = new int[size - 1];
+    auto tempTable = new T[size - 1];
 
     for(int i = 0; i < size - 1; i++)
         tempTable[i] = table[i];
@@ -123,7 +135,8 @@ void DynamicArray::deleteEnd() {
 
 }
 
-void DynamicArray::addElement() {
+template<typename T>
+void DynamicArray<T>::addElement() {
 
     int tempChoice = {0};
     long long duration = {0};
@@ -154,7 +167,8 @@ void DynamicArray::addElement() {
 
 }
 
-void DynamicArray::deleteElement() {
+template<typename T>
+void DynamicArray<T>::deleteElement() {
 
     int tempSample = {rand() % 1024};
     int tempChoice = {0};
@@ -184,7 +198,8 @@ void DynamicArray::deleteElement() {
 
 }
 
-void DynamicArray::searchElement() {
+template<typename T>
+void DynamicArray<T>::searchElement() {
 
     int element;
 
@@ -207,13 +222,15 @@ void DynamicArray::searchElement() {
 
 }
 
-void DynamicArray::drawTable(){
+template<typename T>
+void DynamicArray<T>::drawTable(){
 
     for(int i = 0; i < size; i++)
         std::cout << table[i] << "\n";
 }
 
-void DynamicArray::menu() {
+template<typename T>
+void DynamicArray<T>::menu() {
 
     int tempChoice = 0;
 
@@ -242,7 +259,7 @@ void DynamicArray::menu() {
     }
 }
 
-
+#endif
 
 
 

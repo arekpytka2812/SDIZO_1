@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 23)
 
 link_libraries(stdc++fs)
 
-add_executable(SDIZO_1 main.cpp DataStructures/DynamicArray/DynamicArray.cpp DataStructures/DynamicArray/DynamicArray.h DataStructures/DoublyLinkedList/DoublyLinkedList.cpp DataStructures/DoublyLinkedList/DoublyLinkedList.h Utility/Timer.cpp Utility/Timer.h Utility/FileManager.cpp Utility/FileManager.h DataStructures/BinaryHeap/BinaryHeap.cpp DataStructures/BinaryHeap/BinaryHeap.h main.h DataStructures/DataStructure.cpp DataStructures/DataStructure.h DataStructures/RBTree/RBTree.cpp DataStructures/RBTree/RBTree.h)
+add_executable(SDIZO_1 main.cpp DataStructures/DynamicArray/DynamicArray.tpp DataStructures/DynamicArray/DynamicArray.hpp DataStructures/DoublyLinkedList/DoublyLinkedList.tpp DataStructures/DoublyLinkedList/DoublyLinkedList.hpp Utility/Timer.cpp Utility/Timer.h Utility/FileManager.cpp Utility/FileManager.h DataStructures/BinaryHeap/BinaryHeap.tpp DataStructures/BinaryHeap/BinaryHeap.hpp main.hpp DataStructures/DataStructure.tpp DataStructures/DataStructure.hpp DataStructures/RBTree/RBTree.tpp DataStructures/RBTree/RBTree.hpp)

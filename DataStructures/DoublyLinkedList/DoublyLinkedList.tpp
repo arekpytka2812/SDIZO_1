@@ -1,13 +1,15 @@
-#include "DoublyLinkedList.h"
+#include "DoublyLinkedList.hpp"
 
 //////////////////////////////
 // Functions of ListElement //
 //////////////////////////////
-ListElement::ListElement() {
+template<typename T>
+ListElement<T>::ListElement() {
 
 }
 
-ListElement::ListElement(int value_, ListElement* previous_, ListElement* next_)
+template<typename T>
+ListElement<T>::ListElement(T value_, ListElement* previous_, ListElement* next_)
 :value(value_), previous(previous_), next(next_) {
 
     if(next_ != nullptr)
@@ -23,11 +25,14 @@ ListElement::ListElement(int value_, ListElement* previous_, ListElement* next_)
 //     Functions of DLL     //
 //////////////////////////////
 
-DoublyLinkedList::DoublyLinkedList(){
-    fileManager = new FileManager("DoublyLinkedList");
+template<typename T>
+DoublyLinkedList<T>::DoublyLinkedList(){
+    this->fileManager = new FileManager("DoublyLinkedList");
+    this->timer = new Timer;
 }
 
-ListElement& DoublyLinkedList::operator[](int pos) {
+template<typename T>
+T& DoublyLinkedList<T>::operator[](int pos) {
 
     if(head == nullptr)
         throw std::invalid_argument("List is empty!");
@@ -53,49 +58,53 @@ ListElement& DoublyLinkedList::operator[](int pos) {
     }
 }
 
-void DoublyLinkedList::addFront(int value) {
+template<typename T>
+void DoublyLinkedList<T>::addFront(T element) {
 
     if(size == 0) {
-        head = new ListElement(value, nullptr, nullptr);
+        head = new ListElement<T>(element, nullptr, nullptr);
         tail = head;
     }
     else{
-        head = new ListElement(value, nullptr, head);
+        head = new ListElement<T>(element, nullptr, head);
     }
     size++;
 }
 
-void DoublyLinkedList::addMiddle(int position, int value) {
+template<typename T>
+void DoublyLinkedList<T>::addMiddle(int position, T element) {
 
     if(position == size){
-        addEnd(value);
+        addEnd(element);
         return;
     }
     if(position == 0){
-        addFront(value);
+        addFront(element);
         return;
     }
 
     auto tempNext = &(*this)[position], tempPrevious = &(*this)[position - 1];
 
-    auto tempElement = new ListElement(value, tempPrevious, tempNext);
+    auto tempElement = new ListElement<T>(element, tempPrevious, tempNext);
 
     size++;
 }
 
-void DoublyLinkedList::addEnd(int value) {
+template<typename T>
+void DoublyLinkedList<T>::addEnd(T element) {
 
     if(size == 0) {
-        tail = new ListElement(value, nullptr, nullptr);
+        tail = new ListElement<T>(element, nullptr, nullptr);
         head = tail;
     }
     else{
-        tail = new ListElement(value, tail, nullptr);
+        tail = new ListElement<T>(element, tail, nullptr);
     }
     size++;
 }
 
-void DoublyLinkedList::deleteFront() {
+template<typename T>
+void DoublyLinkedList<T>::deleteFront() {
 
     auto tempHead = head;
 
@@ -108,7 +117,8 @@ void DoublyLinkedList::deleteFront() {
     size--;
 }
 
-void DoublyLinkedList::deleteMiddle(int position) {
+template<typename T>
+void DoublyLinkedList<T>::deleteMiddle(int position) {
 
     if(position == 0){
         deleteFront();
@@ -130,7 +140,8 @@ void DoublyLinkedList::deleteMiddle(int position) {
     size--;
 }
 
-void DoublyLinkedList::deleteEnd() {
+template<typename T>
+void DoublyLinkedList<T>::deleteEnd() {
 
     auto tempTail = tail;
 
@@ -143,16 +154,18 @@ void DoublyLinkedList::deleteEnd() {
     size--;
 }
 
-int DoublyLinkedList::search(int value){
+template<typename T>
+int DoublyLinkedList<T>::search(T element){
 
     for(int i = 0; i < size; i++)
-        if((*this)[i].getValue() == value)
+        if((*this)[i].getValue() == element)
             return i;
 
     return -1;
 }
 
-void DoublyLinkedList::displayList() {
+template<typename T>
+void DoublyLinkedList<T>::displayList() {
 
     auto current = head;
 

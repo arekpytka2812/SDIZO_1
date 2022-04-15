@@ -30,7 +30,7 @@ void FileManager::prepareSamples() {
         dataFile << FileManager::amountOfData[amountCounter] << "\n";
 
         for (int i = 0; i < FileManager::amountOfData[amountCounter]; i++) {
-            dataFile << rand() % 2048 << "\n";
+            dataFile << rand() % 32255 << "\n";
         }
 
         amountCounter++;
@@ -100,7 +100,13 @@ void FileManager::writeToFile(int operation, long long timeValue) {
 }
 
 int FileManager::readData(){
-    int tempInt;
-    dataFile >> tempInt;
-    return tempInt;
+    if(dataFile.good()) {
+        int tempInt;
+        dataFile >> tempInt;
+        std::cout << tempInt;
+        dataFile >> tempInt;
+        std::cout << tempInt;
+        return tempInt;
+    }
+    return -1;
 }

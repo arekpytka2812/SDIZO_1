@@ -1,24 +1,27 @@
-#include "BinaryHeap.h"
+#include "BinaryHeap.hpp"
 
-int& BinaryHeap::operator[](int position){
+template<typename T>
+T& BinaryHeap<T>::operator[](int position){
     if(position < 0 or position >= size)
         throw std::out_of_range("You are out of range!");
     else
         return *(table + position);
 }
 
-BinaryHeap::BinaryHeap(){
-    fileManager = new FileManager("BinaryHeap");
-    timer = new Timer;
+template<typename T>
+BinaryHeap<T>::BinaryHeap() {
+    this->fileManager = new FileManager("BinaryHeap");
+    this->timer = new Timer;
 }
-
-BinaryHeap::~BinaryHeap(){
+template<typename T>
+BinaryHeap<T>::~BinaryHeap(){
     delete[] table;
     table = {nullptr};
     size = {0};
 }
 
-void BinaryHeap::heapify(int i) {
+template<typename T>
+void BinaryHeap<T>::heapify(int i) {
 
     int largest {i}, left {2*i + 1}, right {2*i + 2};
 
@@ -35,7 +38,8 @@ void BinaryHeap::heapify(int i) {
     }
 }
 
-void BinaryHeap::buildHeap() {
+template<typename T>
+void BinaryHeap<T>::buildHeap() {
 
     int startIndex {(size / 2) - 1};
 
@@ -43,12 +47,13 @@ void BinaryHeap::buildHeap() {
         heapify(i);
 }
 
-void BinaryHeap::addElement(int value) {
+template<typename T>
+void BinaryHeap<T>::addElement(T value) {
 
-    timer->setTimer();
+    this->timer->setTimer();
 
     size++;
-    auto tempTable = new int[size];
+    auto tempTable = new T[size];
 
     for(int i = 0; i < size - 1; i++)
         tempTable[i] = table[i];
@@ -59,17 +64,18 @@ void BinaryHeap::addElement(int value) {
     table = tempTable;
     buildHeap();
 
-    timer->setTimer();
-    std::cout << "\n" << timer->getDuration();
+    this->timer->setTimer();
+    std::cout << "\n" << this->timer->getDuration();
 }
 
-void BinaryHeap::deleteElement(int value) {
+template<typename T>
+void BinaryHeap<T>::deleteElement(T value) {
 
     auto elementPosition = searchElement(value);
 
     std::swap(table[elementPosition], table[size - 1]);
 
-    auto tempTable = new int[size - 1];
+    auto tempTable = new T[size - 1];
 
     for(int i = 0; i < size - 1; i++)
         tempTable[i] = table[i];
@@ -82,7 +88,8 @@ void BinaryHeap::deleteElement(int value) {
     buildHeap();
 }
 
-int BinaryHeap::searchElement(int value) {
+template<typename T>
+int BinaryHeap<T>::searchElement(T value) {
 
     for(int i = 0; i < size; i++){
         if(table[i] == value){
@@ -92,7 +99,8 @@ int BinaryHeap::searchElement(int value) {
     return -1;
 }
 
-void BinaryHeap::printHeap(){
+template<typename T>
+void BinaryHeap<T>::printHeap(){
 
     for(int i = 0; i < size; i++)
         std::cout << table[i] << "\n";

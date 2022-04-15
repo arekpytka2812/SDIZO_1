@@ -1,25 +1,26 @@
-#ifndef SDIZO_1_DOUBLYLINKEDLIST_H
-#define SDIZO_1_DOUBLYLINKEDLIST_H
+#ifndef SDIZO_1_DOUBLYLINKEDLIST_HPP
+#define SDIZO_1_DOUBLYLINKEDLIST_HPP
 
-#include "../DataStructure.h"
+#include "../DataStructure.hpp"
 
 #include <cstdlib>
 #include <iostream>
 #include <chrono>
 
+template<typename T>
     class ListElement{
-        int value {0};
+        T value {0};
 
         ListElement* previous {nullptr};
         ListElement* next {nullptr};
 
     public:
         ListElement();
-        ListElement(int, ListElement*, ListElement*);
+        ListElement(T, ListElement*, ListElement*);
 
 
 
-        [[nodiscard]] int getValue() const{
+        [[nodiscard]] T getValue() const{
             if(this != nullptr)
                 return value;
             return -1;
@@ -47,25 +48,26 @@
 
     };
 
-    class DoublyLinkedList : public DataStructure {
+    template<typename T>
+    class DoublyLinkedList : public DataStructure<T> {
 
         int size = 0;
-        ListElement* head {nullptr};
-        ListElement* tail {nullptr};
+        ListElement<T>* head {nullptr};
+        ListElement<T>* tail {nullptr};
 
     public:
 
-        ListElement& operator[](int);
+        T& operator[](int);
 
-        void addFront(int);
-        void addMiddle(int, int);
-        void addEnd(int);
+        void addFront(T);
+        void addMiddle(int, T);
+        void addEnd(T);
 
         void deleteFront();
         void deleteMiddle(int);
         void deleteEnd();
 
-        int search(int);
+        int search(T);
 
         void displayList();
 
