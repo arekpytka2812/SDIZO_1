@@ -64,8 +64,6 @@ FileManager::FileManager(std::string dataType_){
 
     logFile.clear();
     logFile.seekg(0);
-
-    readData();
 }
 
 FileManager::~FileManager() {

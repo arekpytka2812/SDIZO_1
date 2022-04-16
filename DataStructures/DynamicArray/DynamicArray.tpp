@@ -30,7 +30,7 @@ T& DynamicArray<T>::operator[](int position) {
 template<typename T>
 void DynamicArray<T>::addFront(T element) {
 
-        this->timer->setTimer();
+        this->timer->startTimer();
 
         size++;
 
@@ -45,11 +45,11 @@ void DynamicArray<T>::addFront(T element) {
         table = tempTable;
         tempTable = nullptr;
 
-        this->timer->setTimer();
+        this->timer->stopTimer();
 }
 
 template<typename T>
-void DynamicArray<T>::addMiddle(T element, int position) {
+void DynamicArray<T>::add(T element, int position) {
 
     size++;
 
@@ -103,7 +103,7 @@ void DynamicArray<T>::deleteFront() {
 }
 
 template<typename T>
-void DynamicArray<T>::deleteMiddle(int position) {
+void DynamicArray<T>::erase(int position) {
 
     auto tempTable = new T[size - 1];
 

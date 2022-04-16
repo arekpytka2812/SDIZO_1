@@ -12,6 +12,8 @@
 #include "DataStructures/RBTree/RBTree.tpp"
 #include "Utility/FileManager/FileManager.h"
 #include "Utility/Timer/Timer.h"
+#include "Utility/Tests/Tests.hpp"
+#include "Utility/Tests/Tests.tpp"
 
 #include <time.h>
 

@@ -59,13 +59,13 @@ template<typename T>
 
         T& operator[](int);
 
-        void addFront(T);
-        void addMiddle(int, T);
-        void addEnd(T);
+        void addFront(T) override;
+        void add(T, int) override;
+        void addEnd(T) override;
 
-        void deleteFront();
-        void deleteMiddle(int);
-        void deleteEnd();
+        void deleteFront() override;
+        void deleteEnd() override;
+        void erase(int) override;
 
         int search(T);
 

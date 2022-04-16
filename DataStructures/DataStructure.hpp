@@ -14,6 +14,21 @@ protected:
 
     std::vector<double> measurements;
 
+public:
+
+    FileManager* getManager(){
+        return fileManager;
+    }
+
+    virtual void addFront(T) = 0;
+    virtual void add(T, int) = 0;
+    virtual void addEnd(T) = 0;
+
+    virtual void deleteFront() = 0;
+    virtual void deleteEnd() = 0;
+    virtual void erase(T) = 0;
+
+
 };
 
 

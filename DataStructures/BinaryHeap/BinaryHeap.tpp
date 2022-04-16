@@ -48,7 +48,45 @@ void BinaryHeap<T>::buildHeap() {
 }
 
 template<typename T>
-void BinaryHeap<T>::addElement(T value) {
+void BinaryHeap<T>::addFront(T element) {
+    addEnd(element);
+}
+
+template<typename T>
+void BinaryHeap<T>::add(T element, int position){
+
+    size++;
+    auto tempTable = new T[size];
+
+    for(int i = 0; i < position - 1; i++)
+        tempTable[i] = table[i];
+
+    tempTable[position - 1] = element;
+
+    for(int i = position; i < size; i++)
+        tempTable[i] = table[i - 1];
+
+    delete[] table;
+    table = tempTable;
+    tempTable = nullptr;
+
+    buildHeap();
+
+}
+
+template<typename T>
+void BinaryHeap<T>::deleteFront() {
+    erase(table[0]);
+}
+
+template<typename T>
+void BinaryHeap<T>::deleteEnd() {
+    erase(table[size - 1]);
+}
+
+
+template<typename T>
+void BinaryHeap<T>::addEnd(T value) {
 
     this->timer->startTimer();
 
@@ -71,7 +109,7 @@ void BinaryHeap<T>::addElement(T value) {
 }
 
 template<typename T>
-void BinaryHeap<T>::deleteElement(T value) {
+void BinaryHeap<T>::erase(T value) {
 
     auto elementPosition = searchElement(value);
 

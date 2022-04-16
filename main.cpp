@@ -1,24 +1,18 @@
 #include "main.hpp"
 
+
 int main() {
 
     srand(time(nullptr));
 
-    BinaryHeap<float> floaaf;
+    DataStructure<int> * data = new DynamicArray<int>;
 
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-    floaaf.addElement(1.5);
-
-
-
-
+    if(dynamic_cast<BinaryHeap<int>*>(data)){
+        std::cout << "i hope she made lotsa spaghetti!";
+    }
+    else if(dynamic_cast<DynamicArray<int>*>(data)){
+        std::cout << "Bracia commitowniczy";
+    }
 
     return 0;
 }

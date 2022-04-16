@@ -72,7 +72,7 @@ void DoublyLinkedList<T>::addFront(T element) {
 }
 
 template<typename T>
-void DoublyLinkedList<T>::addMiddle(int position, T element) {
+void DoublyLinkedList<T>::add(T element, int position) {
 
     if(position == size){
         addEnd(element);
@@ -118,7 +118,7 @@ void DoublyLinkedList<T>::deleteFront() {
 }
 
 template<typename T>
-void DoublyLinkedList<T>::deleteMiddle(int position) {
+void DoublyLinkedList<T>::erase(int position) {
 
     if(position == 0){
         deleteFront();

@@ -20,9 +20,14 @@ public:
     BinaryHeap();
     ~BinaryHeap();
 
+    void addFront(T) override;
+    void add(T, int) override;
+    void addEnd(T) override;
 
-    void addElement(T);
-    void deleteElement(T);
+    void deleteFront() override;
+    void deleteEnd() override;
+    void erase(T) override;
+
     int searchElement(T);
 
     void printHeap();
