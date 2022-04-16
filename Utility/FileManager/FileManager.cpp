@@ -103,9 +103,6 @@ int FileManager::readData(){
     if(dataFile.good()) {
         int tempInt;
         dataFile >> tempInt;
-        std::cout << tempInt;
-        dataFile >> tempInt;
-        std::cout << tempInt;
         return tempInt;
     }
     return -1;

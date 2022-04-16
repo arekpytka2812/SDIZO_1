@@ -4,9 +4,20 @@ int main() {
 
     srand(time(nullptr));
 
-    RBTree<int> rbTree;
+    BinaryHeap<float> floaaf;
 
-    rbTree.bstInsert(12);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+    floaaf.addElement(1.5);
+
+
+
 
 
     return 0;

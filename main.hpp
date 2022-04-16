@@ -10,8 +10,8 @@
 #include "DataStructures/BinaryHeap/BinaryHeap.tpp"
 #include "DataStructures/RBTree/RBTree.hpp"
 #include "DataStructures/RBTree/RBTree.tpp"
-#include "Utility/FileManager.h"
-#include "Utility/Timer.h"
+#include "Utility/FileManager/FileManager.h"
+#include "Utility/Timer/Timer.h"
 
 #include <time.h>
 

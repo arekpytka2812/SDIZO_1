@@ -50,7 +50,9 @@ void BinaryHeap<T>::buildHeap() {
 template<typename T>
 void BinaryHeap<T>::addElement(T value) {
 
-    this->timer->setTimer();
+    this->timer->startTimer();
+
+    auto start = std::chrono::high_resolution_clock::now();
 
     size++;
     auto tempTable = new T[size];
@@ -64,7 +66,7 @@ void BinaryHeap<T>::addElement(T value) {
     table = tempTable;
     buildHeap();
 
-    this->timer->setTimer();
+    this->timer->stopTimer();
     std::cout << "\n" << this->timer->getDuration();
 }
 

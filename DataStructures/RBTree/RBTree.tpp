@@ -42,18 +42,19 @@ void RBTree<T>::bstInsert(const T value) {
     auto tempElement = root;
 
     if(size == 0){
-        root = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
+      //  root = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
         return;
     }
 
     while(tempElement != &guardian){
+
         if(value < tempElement->getValue())
             tempElement = tempElement->getLeft();
+
         if(value > tempElement->getValue())
             tempElement = tempElement->getRight();
     }
-
-    tempElement = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
+    //tempElement = new TreeElement<T>(value, TreeElement<T>::BLACK, guardian, guardian);
     size++;
 }
 
