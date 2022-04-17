@@ -11,12 +11,12 @@ template<typename T>
     class ListElement{
         T value {0};
 
-        ListElement* previous {nullptr};
-        ListElement* next {nullptr};
+        ListElement<T>* previous {nullptr};
+        ListElement<T>* next {nullptr};
 
     public:
         ListElement();
-        ListElement(T, ListElement*, ListElement*);
+        ListElement(T, ListElement<T>*, ListElement<T>*);
 
 
 
@@ -26,26 +26,21 @@ template<typename T>
             return -1;
         }
 
-        [[nodiscard]] ListElement* getNext() const{
+        [[nodiscard]] ListElement<T>* getNext() const{
             return next;
         }
 
-        [[nodiscard]] ListElement* getPrevious() const{
+        [[nodiscard]] ListElement<T>* getPrevious() const{
             return previous;
         }
 
-        void setNext(ListElement* next_){
+        void setNext(ListElement<T>* next_){
             next = next_;
         }
 
-        void setPrevious(ListElement* previous_){
+        void setPrevious(ListElement<T>* previous_){
             previous = previous_;
         }
-
-        [[nodiscard]] ListElement* getNext(){
-            return next;
-        }
-
     };
 
     template<typename T>
@@ -57,7 +52,7 @@ template<typename T>
 
     public:
 
-        T& operator[](int);
+        ListElement<T>& operator[](int);
 
         void addFront(T) override;
         void add(T, int) override;

@@ -9,7 +9,7 @@ ListElement<T>::ListElement() {
 }
 
 template<typename T>
-ListElement<T>::ListElement(T value_, ListElement* previous_, ListElement* next_)
+ListElement<T>::ListElement(T value_, ListElement<T>* previous_, ListElement<T>* next_)
 :value(value_), previous(previous_), next(next_) {
 
     if(next_ != nullptr)
@@ -32,7 +32,7 @@ DoublyLinkedList<T>::DoublyLinkedList(){
 }
 
 template<typename T>
-T& DoublyLinkedList<T>::operator[](int pos) {
+ListElement<T>& DoublyLinkedList<T>::operator[](int pos) {
 
     if(head == nullptr)
         throw std::invalid_argument("List is empty!");

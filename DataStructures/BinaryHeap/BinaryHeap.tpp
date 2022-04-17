@@ -131,6 +131,9 @@ void BinaryHeap<T>::erase(T value) {
 template<typename T>
 int BinaryHeap<T>::searchElement(T value) {
 
+    if(table[0] < value)
+        return -1;
+
     for(int i = 0; i < size; i++){
         if(table[i] == value){
             return i;

@@ -132,7 +132,6 @@ void DynamicArray<T>::deleteEnd() {
     table = tempTable;
     tempTable = nullptr;
     size--;
-
 }
 
 template<typename T>

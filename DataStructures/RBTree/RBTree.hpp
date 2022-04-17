@@ -8,9 +8,9 @@ class TreeElement{
 
     T value {0};
 
-    TreeElement* left {nullptr};
-    TreeElement* right {nullptr};
-    TreeElement* parent {nullptr};
+    TreeElement<T>* left {nullptr};
+    TreeElement<T>* right {nullptr};
+    TreeElement<T>* parent {nullptr};
 
 public:
 
@@ -21,19 +21,24 @@ public:
     Color color;
 
     TreeElement();
-    TreeElement(T, Color,TreeElement<T>*, TreeElement<T>*);
+    TreeElement(T, Color, TreeElement<T>*, TreeElement<T>*, TreeElement<T>*);
     ~TreeElement();
 
     void setGuardian();
-    void setColor(Color);
 
-    TreeElement* getLeft(){
+    void setElement(char, TreeElement<T>*);
+
+    void setValue(T value_){
+        this->value = value_;
+    }
+
+    TreeElement<T>* getLeft(){
         return left;
     }
-    TreeElement* getRight(){
+    TreeElement<T>* getRight(){
         return right;
     }
-    TreeElement* getParent(){
+    TreeElement<T>* getParent(){
         return parent;
     }
 
@@ -49,9 +54,13 @@ class RBTree : public DataStructure<T>{
     TreeElement<T>* root {nullptr};
     int size {0};
 
-public:
+    void bstInsert(TreeElement<T>*);
+    TreeElement<T>* findMIN(TreeElement<T>*);
+    TreeElement<T>* findMAX(TreeElement<T>*);
+    TreeElement<T>* treeSuccessor(TreeElement<T>*);
+    void deleteFix(TreeElement<T>*);
 
-    void bstInsert(T);
+public:
 
     RBTree();
 
@@ -60,8 +69,15 @@ public:
     void rotateLeft(TreeElement<T>*);
     void rotateRight(TreeElement<T>*);
 
+    void addFront(T) override;
+    void add(T, int) override;
+    void addEnd(T) override;
+
+    void deleteFront() override;
+    void deleteEnd() override;
+    void erase(T) override;
+
     void addElement(T);
-    void deleteElement(T);
     TreeElement<T>* searchElement(T);
 
     void printTree();
