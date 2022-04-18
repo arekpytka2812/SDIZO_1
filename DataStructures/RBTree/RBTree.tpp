@@ -50,9 +50,9 @@ void TreeElement<T>::setElement(char whichOne, TreeElement<T>* node) {
 template<typename T>
 void RBTree<T>::bstInsert(TreeElement<T>* node) {
 
-    if(size == 0){
+    if(this->size == 0){
         root = node;
-        size++;
+        this->size++;
         return;
     }
 
@@ -76,7 +76,9 @@ void RBTree<T>::bstInsert(TreeElement<T>* node) {
             node->setElement('p', node->getParent()->getLeft());
         }
     }
-    size++;
+    this->size++;
+
+    std::cout << this->size << std::endl;
 }
 
 template<typename T>
@@ -211,14 +213,14 @@ void RBTree<T>::deleteFix(TreeElement<T> * node) {
 template<typename T>
 RBTree<T>::RBTree() {
 
-    this->fileManager = new FileManager("RBTree");
+    this->fileManager = new FileManager<T>("RBTree");
     this->timer = new Timer;
 
     guardian.setGuardian();
 
     root = &guardian;
 
-    size = 0;
+    this->size = 0;
 }
 
 template<typename T>
@@ -359,42 +361,69 @@ void RBTree<T>::deleteEnd() {
 }
 
 template<typename T>
-void RBTree<T>::erase(T value) {
+int RBTree<T>::erase(T value) {
 
-    TreeElement<T>* firstHelper = nullptr;
-    TreeElement<T>* secondHelper = nullptr;
+    TreeElement<T> *firstHelper = nullptr;
+    TreeElement<T> *secondHelper = nullptr;
+    int exists = this->search(value);
+
+    if(exists == -1){
+        return -1;
+    }
+
     auto elementToRemove = this->searchElement(value);
 
-    if(elementToRemove->getLeft() == &guardian
+    if (elementToRemove->getLeft() == &guardian
         || elementToRemove->getRight() == &guardian)
-            firstHelper = elementToRemove;
+        firstHelper = elementToRemove;
     else
         firstHelper = this->treeSuccessor(elementToRemove);
 
-    if(firstHelper->getLeft() != &guardian)
+    if (firstHelper->getLeft() != &guardian)
         secondHelper = firstHelper->getLeft();
     else
         secondHelper = firstHelper->getRight();
 
     secondHelper->setElement('p', firstHelper->getParent());
 
-    if(firstHelper->getParent() == &guardian)
+    if (firstHelper->getParent() == &guardian)
         this->root = secondHelper;
 
-    else{
-        if(firstHelper == firstHelper->getParent()->getLeft())
+    else {
+        if (firstHelper == firstHelper->getParent()->getLeft())
             firstHelper->getParent()->setElement('l', secondHelper);
         else
             firstHelper->getParent()->setElement('r', secondHelper);
     }
 
-    if(firstHelper != elementToRemove)
+    if (firstHelper != elementToRemove)
         elementToRemove->setValue(firstHelper->getValue());
 
-    if(firstHelper->color == TreeElement<T>::Color::BLACK)
+    if (firstHelper->color == TreeElement<T>::Color::BLACK)
         this->deleteFix(secondHelper);
 
-    size--;
+    this->size--;
+
+    return 1;
+}
+
+template<typename T>
+int RBTree<T>::search(T value) {
+
+    auto tempElement = root;
+
+    while (tempElement != &guardian){
+
+        if(value < tempElement->getValue())
+            tempElement = tempElement->getLeft();
+
+        else if(value > tempElement->getValue())
+            tempElement = tempElement->getRight();
+
+        else
+            return 1;
+    }
+    return -1;
 }
 
 template<typename T>
@@ -417,13 +446,129 @@ TreeElement<T>* RBTree<T>::searchElement(T value) {
     return nullptr;
 }
 
+
+
 template<typename T>
-void RBTree<T>::printTree() {
+void RBTree<T>::print(std::ostream& out)
+{
+    if (this->root != &guardian)
+    {
+        // Calculate tree depth
+        size_t depth = 0;
+        calculateDepth(this->root, depth, 0);
 
-    auto temp = root;
+        // Calculate maximum number of nodes
+        size_t size = pow(2, depth);
 
-    while(temp not_eq &guardian){
-        std::cout << temp->getValue() << "\n";
-        temp = temp->getRight();
+        // Create table to get access to all nodes
+        TreeElement<T>** table = new TreeElement<T>*[this->size];
+        for (size_t i = 0; i < size; i++)
+        {
+            table[i] = nullptr;
+        }
+
+        // Place nodes inside table
+        placeNodes(this->root, table, 0);
+
+        // Get handler for console manipulation
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+        bool outOfBound = false;
+        size_t first = 0;
+        size_t last = 1;
+        size--;
+
+        // Calculate the maximum number of nodes at the current heap level
+        size_t space = size;
+
+        while (!outOfBound)
+        {
+            // Print space before each heap level
+            out << std::string(space / 2 * 3, ' ');
+
+            // Print nodes on current heap level
+            for (size_t i = first; i < last; i++)
+            {
+                if (i >= size)
+                {
+                    outOfBound = true;
+                    break;
+                }
+
+                // Check if table on current index is not empty
+                if (table[i] != nullptr)
+                {
+                    // Display node
+                    int color = table[i]->color == TreeElement<T>::Color::RED ? 12 : 8;
+                    SetConsoleTextAttribute(hConsole, color);
+                    out << '[' << table[i]->getValue() << ']' << std::string(space * 3, ' ');
+                    continue;
+                }
+
+                // Display emply space instead of node
+                out << "   " << std::string(space * 3, ' ');
+            }
+            out << "\n\n";
+
+            // Change indexes or last and first node on each heap level
+            first = last;
+            last = 2 * last + 1;
+
+            // Change size of space between nodes
+            space = space / 2;
+        }
+
+        // Set back default console color
+        SetConsoleTextAttribute(hConsole, 15);
+
+        // Delete table for storing nodes
+        delete[] table;
+
+        return;
+    }
+
+    out << "Data structure is empty" << std::endl;
+}
+template<typename T>
+void RBTree<T>::calculateDepth(TreeElement<T>* node, size_t& maxDepth, size_t currentDepth)
+{
+    // Increase depth
+    currentDepth++;
+
+    // Chech if calculated depth is grater than max depth
+    if (currentDepth > maxDepth)
+    {
+        maxDepth = currentDepth;
+    }
+
+    // Check if left child is not guardian
+    if (node->getLeft() != &guardian)
+    {
+        calculateDepth(node->getLeft(), maxDepth, currentDepth);
+    }
+
+    // Check if right child is not guardian
+    if (node->getRight() != &guardian)
+    {
+        calculateDepth(node->getRight(), maxDepth, currentDepth);
+    }
+}
+
+template<typename T>
+void RBTree<T>::placeNodes(TreeElement<T>* node, TreeElement<T>** table, size_t index)
+{
+    // Place node in table
+    table[index] = node;
+
+    // Check if exists left child
+    if (node->getLeft() != &guardian)
+    {
+        placeNodes(node->getLeft(), table, 2 * index + 1);
+    }
+
+    // Check if exists right child
+    if (node->getRight() != &guardian)
+    {
+        placeNodes(node->getRight(), table, 2 * index + 2);
     }
 }

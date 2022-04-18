@@ -1,11 +1,12 @@
-#ifndef SDIZO_1_FILEMANAGER_H
-#define SDIZO_1_FILEMANAGER_H
+#ifndef SDIZO_1_FILEMANAGER_HPP
+#define SDIZO_1_FILEMANAGER_HPP
 
 
 #include <fstream>
 #include <iostream>
 #include <experimental/filesystem>
 
+template<typename T>
 class FileManager {
 
     std::string dataType;
@@ -28,9 +29,10 @@ public:
     FileManager(std::string);
     ~FileManager();
 
-    void writeToFile(int, long long);
-    int readData();
+    void writeToFile(int, double, int);
+    T readData();
 
+    void setPointer();
 };
 
 

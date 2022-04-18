@@ -9,7 +9,6 @@ template<typename T>
 class BinaryHeap: public DataStructure<T> {
 
     T* table { nullptr };
-    int size {0};
 
     T& operator[](int);
 
@@ -26,9 +25,9 @@ public:
 
     void deleteFront() override;
     void deleteEnd() override;
-    void erase(T) override;
+    int erase(T) override;
 
-    int searchElement(T);
+    int search(T) override;
 
     void printHeap();
 

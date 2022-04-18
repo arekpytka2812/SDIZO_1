@@ -3,11 +3,15 @@
 
 #include <chrono>
 #include <iostream>
+#include <windows.h>
 
 class Timer {
 
     std::chrono::high_resolution_clock::time_point operationStart;
     std::chrono::high_resolution_clock::time_point operationEnd;
+
+    double PCFreq = 0.0;
+    __int64 CounterStart = 0;
 
 public:
 
@@ -17,7 +21,9 @@ public:
     void startTimer();
 
     double getDuration(){
-        return std::chrono::duration<double, std::nano>(this->operationEnd - this->operationStart).count();
+        LARGE_INTEGER li;
+        QueryPerformanceCounter(&li);
+        return double(li.QuadPart-CounterStart)/PCFreq;
     }
 
 };

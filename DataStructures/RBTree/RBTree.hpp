@@ -3,6 +3,9 @@
 
 #include "../DataStructure.hpp"
 
+#include <math.h>
+#include <windows.h>
+
 template<typename T>
 class TreeElement{
 
@@ -52,7 +55,6 @@ class RBTree : public DataStructure<T>{
 
     TreeElement<T> guardian;
     TreeElement<T>* root {nullptr};
-    int size {0};
 
     void bstInsert(TreeElement<T>*);
     TreeElement<T>* findMIN(TreeElement<T>*);
@@ -75,12 +77,16 @@ public:
 
     void deleteFront() override;
     void deleteEnd() override;
-    void erase(T) override;
+    int erase(T) override;
 
-    void addElement(T);
+    int search(T) override;
+
     TreeElement<T>* searchElement(T);
 
-    void printTree();
+    void print(std::ostream&);
+
+    void calculateDepth(TreeElement<T>*, size_t&, size_t);
+    void placeNodes(TreeElement<T>*, TreeElement<T>**, size_t);
 };
 
 

@@ -46,7 +46,6 @@ template<typename T>
     template<typename T>
     class DoublyLinkedList : public DataStructure<T> {
 
-        int size = 0;
         ListElement<T>* head {nullptr};
         ListElement<T>* tail {nullptr};
 
@@ -60,9 +59,9 @@ template<typename T>
 
         void deleteFront() override;
         void deleteEnd() override;
-        void erase(int) override;
+        int erase(T) override;
 
-        int search(T);
+        int search(T) override;
 
         void displayList();
 

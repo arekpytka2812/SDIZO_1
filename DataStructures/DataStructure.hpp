@@ -2,22 +2,26 @@
 #define SDIZO_1_DATASTRUCTURE_HPP
 
 #include "../Utility/Timer/Timer.h"
-#include "../Utility/FileManager/FileManager.h"
+#include "../Utility/FileManager/FileManager.hpp"
 
 template<typename T>
 class DataStructure {
 
 protected:
 
-    Timer* timer {nullptr};
-    FileManager* fileManager {nullptr};
+    int size = 0;
 
-    std::vector<double> measurements;
+    Timer* timer {nullptr};
+    FileManager<T>* fileManager {nullptr};
 
 public:
 
-    FileManager* getManager(){
+    FileManager<T>* getManager(){
         return fileManager;
+    }
+
+    int getSize(){
+        return size;
     }
 
     virtual void addFront(T) = 0;
@@ -26,8 +30,9 @@ public:
 
     virtual void deleteFront() = 0;
     virtual void deleteEnd() = 0;
-    virtual void erase(T) = 0;
+    virtual int erase(T) = 0;
 
+    virtual int search(T) = 0;
 
 };
 

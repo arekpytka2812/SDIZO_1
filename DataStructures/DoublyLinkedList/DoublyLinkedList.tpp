@@ -27,23 +27,17 @@ ListElement<T>::ListElement(T value_, ListElement<T>* previous_, ListElement<T>*
 
 template<typename T>
 DoublyLinkedList<T>::DoublyLinkedList(){
-    this->fileManager = new FileManager("DoublyLinkedList");
+    this->fileManager = new FileManager<T>("DoublyLinkedList");
     this->timer = new Timer;
 }
 
 template<typename T>
 ListElement<T>& DoublyLinkedList<T>::operator[](int pos) {
 
-    if(head == nullptr)
-        throw std::invalid_argument("List is empty!");
-
-    if(pos >= size)
-        throw std::out_of_range("You are out of range!");
-
-    if(pos >= static_cast<int>(size/2)){
+    if(pos >= static_cast<int>(this->size/2)){
         auto current = tail;
 
-        for(int i = size - 1; i > pos; i--)
+        for(int i = this->size - 1; i > pos; i--)
             current = current->getPrevious();
 
         return *current;
@@ -61,46 +55,49 @@ ListElement<T>& DoublyLinkedList<T>::operator[](int pos) {
 template<typename T>
 void DoublyLinkedList<T>::addFront(T element) {
 
-    if(size == 0) {
+    if(this->size == 0) {
         head = new ListElement<T>(element, nullptr, nullptr);
         tail = head;
     }
     else{
         head = new ListElement<T>(element, nullptr, head);
     }
-    size++;
+    this->size++;
 }
 
 template<typename T>
 void DoublyLinkedList<T>::add(T element, int position) {
 
-    if(position == size){
+    if(position == this->size){
         addEnd(element);
         return;
     }
-    if(position == 0){
+
+    if(position == 0 || position == -1){
         addFront(element);
         return;
     }
 
-    auto tempNext = &(*this)[position], tempPrevious = &(*this)[position - 1];
+    if(position > 0 && position < this->size - 1) {
+        auto tempNext = &(*this)[position], tempPrevious = &(*this)[position - 1];
 
-    auto tempElement = new ListElement<T>(element, tempPrevious, tempNext);
+        auto tempElement = new ListElement<T>(element, tempPrevious, tempNext);
 
-    size++;
+        this->size++;
+    }
 }
 
 template<typename T>
 void DoublyLinkedList<T>::addEnd(T element) {
 
-    if(size == 0) {
+    if(this->size == 0) {
         tail = new ListElement<T>(element, nullptr, nullptr);
         head = tail;
     }
     else{
         tail = new ListElement<T>(element, tail, nullptr);
     }
-    size++;
+    this->size++;
 }
 
 template<typename T>
@@ -114,21 +111,28 @@ void DoublyLinkedList<T>::deleteFront() {
     tempHead->setNext(nullptr);
     delete tempHead;
 
-    size--;
+    this->size--;
 }
 
 template<typename T>
-void DoublyLinkedList<T>::erase(int position) {
+int DoublyLinkedList<T>::erase(T value) {
+
+    auto position = search(value);
+
+    if(position == -1){
+        return -1;
+    }
 
     if(position == 0){
         deleteFront();
-        return;
+        return 1;
     }
 
-    if(position == size){
+    if(position == this->size){
         deleteEnd();
-        return;
+        return 1;
     }
+
 
     auto tempPrevious = (*this)[position].getPrevious(), tempNext = (*this)[position].getNext();
 
@@ -137,7 +141,9 @@ void DoublyLinkedList<T>::erase(int position) {
     tempPrevious->setNext(tempNext);
     tempNext->setPrevious(tempPrevious);
 
-    size--;
+    this->size--;
+
+    return 1;
 }
 
 template<typename T>
@@ -145,19 +151,19 @@ void DoublyLinkedList<T>::deleteEnd() {
 
     auto tempTail = tail;
 
-    tail = &(*this)[size - 2];
+    tail = &(*this)[this->size - 2];
     tail ->setNext(nullptr);
 
     tempTail->setPrevious(nullptr);
     delete tempTail;
 
-    size--;
+    this->size--;
 }
 
 template<typename T>
 int DoublyLinkedList<T>::search(T element){
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < this->size; i++)
         if((*this)[i].getValue() == element)
             return i;
 
@@ -169,7 +175,7 @@ void DoublyLinkedList<T>::displayList() {
 
     auto current = head;
 
-    for(int i = 0; i < size; i++){
+    for(int i = 0; i < this->size; i++){
         std::cout << current->getPrevious()->getValue() << "<-" << current->getValue() << "->" << current->getNext()->getValue() << "\n";
         current = current->getNext();
     }

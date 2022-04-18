@@ -5,20 +5,20 @@
 
 template<typename T>
 DynamicArray<T>::DynamicArray() {
-    this->fileManager = new FileManager("DynamicArray");
+    this->fileManager = new FileManager<T>("DynamicArray");
     this->timer = new Timer;
 }
 
 template<typename T>
 DynamicArray<T>::~DynamicArray() {
     delete[] table;
-    size = {0};
+    this->size = {0};
 }
 
 template<typename T>
 T& DynamicArray<T>::operator[](int position) {
 
-    if(position < 0 && position >= size)
+    if(position < 0 && position >= this->size)
         throw std::out_of_range("You are out of range!");
 
     else{
@@ -32,13 +32,13 @@ void DynamicArray<T>::addFront(T element) {
 
         this->timer->startTimer();
 
-        size++;
+        this->size++;
 
-        auto tempTable = new T [size];
+        auto tempTable = new T [this->size];
 
         tempTable[0] = element;
 
-        for(int i = 1; i < size; i++)
+        for(int i = 1; i < this->size; i++)
             tempTable[i] = table[i - 1];
 
         delete[] table;
@@ -51,16 +51,21 @@ void DynamicArray<T>::addFront(T element) {
 template<typename T>
 void DynamicArray<T>::add(T element, int position) {
 
-    size++;
+    if(position == -1){
+        addFront(element);
+        return;
+    }
 
-    auto tempTable = new T[size];
+    this->size++;
+
+    auto tempTable = new T[this->size];
 
     for(int i = 0; i < position - 1; i++)
         tempTable[i] = table[i];
 
     tempTable[position - 1] = element;
 
-    for(int i = position; i < size; i++)
+    for(int i = position; i < this->size; i++)
         tempTable[i] = table[i - 1];
 
     delete[] table;
@@ -72,14 +77,14 @@ void DynamicArray<T>::add(T element, int position) {
 template<typename T>
 void DynamicArray<T>::addEnd(T element) {
 
-    size++;
+    this->size++;
 
-    auto tempTable = new T[size];
+    auto tempTable = new T[this->size];
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < this->size; i++)
         tempTable[i] = table[i];
 
-    tempTable[size - 1] = element;
+    tempTable[this->size - 1] = element;
 
     delete[] table;
     table = tempTable;
@@ -90,48 +95,56 @@ void DynamicArray<T>::addEnd(T element) {
 template<typename T>
 void DynamicArray<T>::deleteFront() {
 
-    auto tempTable = new T[size - 1];
+    auto tempTable = new T[this->size - 1];
 
-    for(int i = 1; i < size; i++)
+    for(int i = 1; i < this->size; i++)
         tempTable[i - 1] = table[i];
 
     delete[] table;
     table = tempTable;
     tempTable = nullptr;
 
-    size--;
+    this->size--;
 }
 
 template<typename T>
-void DynamicArray<T>::erase(int position) {
+int DynamicArray<T>::erase(T value) {
 
-    auto tempTable = new T[size - 1];
+    auto position = search(value);
+
+    if(position == -1){
+        return -1;
+    }
+
+    auto tempTable = new T[this->size - 1];
 
     for(int i = 0; i < position - 1; i++)
         tempTable[i] = table[i];
 
-    for(int i = position - 1; i < size - 1; i++)
+    for(int i = position - 1; i < this->size - 1; i++)
         tempTable[i] = table[i+1];
 
     delete[] table;
     table = tempTable;
     tempTable = nullptr;
 
-    size--;
+    this->size--;
+
+    return 1;
 }
 
 template<typename T>
 void DynamicArray<T>::deleteEnd() {
 
-    auto tempTable = new T[size - 1];
+    auto tempTable = new T[this->size - 1];
 
-    for(int i = 0; i < size - 1; i++)
+    for(int i = 0; i < this->size - 1; i++)
         tempTable[i] = table[i];
 
     delete[] table;
     table = tempTable;
     tempTable = nullptr;
-    size--;
+    this->size--;
 }
 
 template<typename T>
@@ -198,33 +211,21 @@ void DynamicArray<T>::deleteElement() {
 }
 
 template<typename T>
-void DynamicArray<T>::searchElement() {
+int DynamicArray<T>::search(T element) {
 
-    int element;
-
-    std::cout << "Which element: \n";
-    std::cin >> element;
-
-    auto start = std::chrono::high_resolution_clock::now();
-
-    for(int i = 0; i < size; i++){
-
+    for(int i = 0; i < this->size; i++){
         if(table[i] == element) {
-
-            std::cout << "index: " << i;
-
-            auto end = std::chrono::high_resolution_clock::now();
-
-            return;
+            return i;
         }
     }
+    return -1;
 
 }
 
 template<typename T>
 void DynamicArray<T>::drawTable(){
 
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < this->size; i++)
         std::cout << table[i] << "\n";
 }
 
@@ -247,7 +248,7 @@ void DynamicArray<T>::menu() {
                 deleteElement();
                 break;
             case 3:
-                searchElement();
+                search();
                 break;
             case 4:
                 drawTable();

@@ -12,7 +12,6 @@ template<typename T>
 class DynamicArray : public DataStructure<T>{
 
     T* table = {nullptr};
-    int size = {0};
 
     int amountOfSamples;
 
@@ -24,11 +23,12 @@ class DynamicArray : public DataStructure<T>{
 
     void deleteFront() override;
     void deleteEnd() override;
-    void erase(int) override;
+    int erase(T) override;
+
+    int search(T) override;
 
     void addElement();
     void deleteElement();
-    void searchElement();
 
     void drawTable();
 

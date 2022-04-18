@@ -5,17 +5,24 @@
 template<typename T>
 class Tests {
 
+    Timer* timer = new Timer;
+
+    int getRandomIndex(DataStructure<T>*);
+    T getRandomData();
+
 public:
 
     void addFront(DataStructure<T>*);
-    void addMiddle(DataStructure<T>*);
+    void add(DataStructure<T>*);
     void addEnd(DataStructure<T>*);
+
+    void deleteFront(DataStructure<T>*);
+    void erase(DataStructure<T>*);
+    void deleteEnd(DataStructure<T>*);
 
     void search(DataStructure<T>*);
 
-    void deleteFront(DataStructure<T>*);
-    void deleteMiddle(DataStructure<T>*);
-    void deleteEnd(DataStructure<T>*);
+    void allTests(DataStructure<T>*);
 
 };
 
