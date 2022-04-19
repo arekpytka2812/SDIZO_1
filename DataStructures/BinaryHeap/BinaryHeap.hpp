@@ -15,6 +15,8 @@ class BinaryHeap: public DataStructure<T> {
     void heapify(int);
     void buildHeap();
 
+    T getRandomValue();
+
 public:
     BinaryHeap();
     ~BinaryHeap();

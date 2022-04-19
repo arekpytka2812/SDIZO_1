@@ -186,4 +186,100 @@ void DoublyLinkedList<T>::displayList() {
 template<typename T>
 void DoublyLinkedList<T>::menu() {
 
+    int tempChoice = 0;
+    T element;
+
+    while(true){
+
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cin >> tempChoice;
+
+        switch (tempChoice) {
+
+            case 1:
+                addElement();
+                break;
+            case 2:
+                deleteElement();
+                break;
+            case 3:
+                std::cout << "Type value: \n";
+                std::cin >> element;
+                search(element);
+                break;
+            case 4:
+                displayList();
+                break;
+            default:
+                return;
+        }
+    }
+}
+
+template<typename T>
+void DoublyLinkedList<T>::addElement(){
+
+    int tempChoice = {0};
+    T element;
+    int pos;
+
+    std::cout << "Where you wanna add element?\n1. Front\n2. Middle\n3. End\n";
+    std::cin >> tempChoice;
+    std::cout << "Type value: \n";
+    std::cin >> element;
+
+    switch(tempChoice){
+
+        case 1:
+            addFront(element);
+            break;
+
+        case 2:
+            std::cout << "Type position: \n";
+            std::cin >> pos;
+            add(element, pos);
+            break;
+
+        case 3:
+            addEnd(element);
+            break;
+    }
+}
+
+template<typename T>
+void DoublyLinkedList<T>::deleteElement() {
+
+    int tempChoice;
+    T element;
+
+    std::cout << "Where you wanna delete element?\n1. Front\n2. Middle\n3. End\n";
+    std::cin >> tempChoice;
+
+    switch(tempChoice){
+
+        case 1:
+            deleteFront();
+            break;
+
+        case 2:
+            std::cout << "Type value: \n";
+            std::cin >> element;
+
+            erase(element);
+            break;
+
+        case 3:
+            deleteEnd();
+            break;
+    }
+}
+
+template<typename T>
+int DoublyLinkedList<T>::getRandomIndex() {
+    return rand() % ((this->size - 3) + 1);
+}
+
+template<typename T>
+T DoublyLinkedList<T>::getRandomValue() {
+    return ((*this)[getRandomIndex()]).getValue();
 }

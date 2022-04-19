@@ -151,29 +151,39 @@ template<typename T>
 void DynamicArray<T>::addElement() {
 
     int tempChoice = {0};
+    T element;
+    int pos;
 
     std::cout << "Where you wanna add element?\n1. Front\n2. Middle\n3. End\n";
     std::cin >> tempChoice;
+    std::cout << "Type value: \n";
+    std::cin >> element;
 
     switch(tempChoice){
 
         case 1:
-          addFront(rand());
+          addFront(element);
             break;
 
         case 2:
-            add(rand(), getRandomIndex());
+            std::cout << "Where: \n";
+            std::cin >> pos;
+
+            add(element, pos);
             break;
 
         case 3:
-          addEnd(rand());
+          addEnd(element);
             break;
     }
 }
 
 template<typename T>
 void DynamicArray<T>::deleteElement() {
+
     int tempChoice;
+    T element;
+
     std::cout << "Where you wanna delete element?\n1. Front\n2. Middle\n3. End\n";
     std::cin >> tempChoice;
 
@@ -184,7 +194,10 @@ void DynamicArray<T>::deleteElement() {
             break;
 
         case 2:
-            erase(getRandomValue());
+            std::cout << "Type value: \n";
+            std::cin >> element;
+
+            erase(element);
             break;
 
         case 3:
@@ -226,6 +239,7 @@ template<typename T>
 void DynamicArray<T>::menu() {
 
     int tempChoice = 0;
+    T element;
 
     while(true){
 
@@ -241,7 +255,9 @@ void DynamicArray<T>::menu() {
                 deleteElement();
                 break;
             case 3:
-                search(getRandomValue());
+                std::cout << "Type value: \n";
+                std::cin >> element;
+                search(element);
                 break;
             case 4:
                 drawTable();

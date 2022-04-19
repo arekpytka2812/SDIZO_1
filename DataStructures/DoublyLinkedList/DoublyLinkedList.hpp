@@ -47,6 +47,12 @@ template<typename T>
         ListElement<T>* head {nullptr};
         ListElement<T>* tail {nullptr};
 
+        int getRandomIndex();
+        T getRandomValue();
+
+        void addElement();
+        void deleteElement();
+
     public:
 
         ListElement<T>& operator[](int);

@@ -156,4 +156,36 @@ void BinaryHeap<T>::printHeap(){
 template<typename T>
 void BinaryHeap<T>::menu() {
 
+    int tempChoice;
+    T element;
+    int position;
+
+    while(true) {
+
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cin >> tempChoice;
+
+        switch (tempChoice) {
+
+            case 1:
+                add(element, -1);
+                break;
+            case 2:
+                erase(element);
+                break;
+            case 3:
+                search(element);
+                break;
+            case 4:
+                printHeap();
+                break;
+            default:
+                return;
+        }
+    }
+}
+
+template<typename T>
+T BinaryHeap<T>::getRandomValue() {
+    return table[rand() % ((this->size - 3) + 1)];
 }

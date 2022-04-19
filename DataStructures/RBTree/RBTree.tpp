@@ -576,4 +576,39 @@ void RBTree<T>::placeNodes(TreeElement<T>* node, TreeElement<T>** table, size_t 
 template<typename T>
 void RBTree<T>::menu() {
 
+    int tempChoice = 0;
+    T element;
+
+    while(true){
+
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cin >> tempChoice;
+        
+        switch (tempChoice) {
+
+            case 1:
+                std::cout << "Type value: \n";
+                std::cin >> element;
+
+                add(element, -1);
+                break;
+            case 2:
+                std::cout << "Type value: \n";
+                std::cin >> element;
+
+                erase(element);
+                break;
+            case 3:
+                std::cout << "Type value: \n";
+                std::cin >> element;
+
+                search(element);
+                break;
+            case 4:
+                print(std::cout);
+                break;
+            default:
+                return;
+        }
+    }
 }
