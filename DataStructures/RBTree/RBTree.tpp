@@ -30,6 +30,8 @@ void TreeElement<T>::setGuardian() {
 template<typename T>
 void TreeElement<T>::setElement(char whichOne, TreeElement<T>* node) {
 
+    // setter to set parent, left, right nodes
+
     switch(whichOne){
         case 'l':
             left = node;
