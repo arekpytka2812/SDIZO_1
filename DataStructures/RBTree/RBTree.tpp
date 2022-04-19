@@ -572,3 +572,8 @@ void RBTree<T>::placeNodes(TreeElement<T>* node, TreeElement<T>** table, size_t 
         placeNodes(node->getRight(), table, 2 * index + 2);
     }
 }
+
+template<typename T>
+void RBTree<T>::menu() {
+
+}

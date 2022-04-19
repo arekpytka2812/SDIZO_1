@@ -32,11 +32,14 @@ class DynamicArray : public DataStructure<T>{
 
     void drawTable();
 
+    T getRandomValue();
+    int getRandomIndex();
+
 public:
     DynamicArray();
     ~DynamicArray();
 
-    void menu();
+    void menu() override;
 };
 
 

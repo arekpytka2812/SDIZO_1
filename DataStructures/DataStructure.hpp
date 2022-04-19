@@ -34,6 +34,8 @@ public:
 
     virtual int search(T) = 0;
 
+    virtual void menu() = 0;
+
 };
 
 

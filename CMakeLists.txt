@@ -32,4 +32,4 @@ add_executable(SDIZO_1          main.cpp
                                 DataStructures/RBTree/RBTree.hpp
 
                                 Utility/Tests/Tests.tpp
-                                Utility/Tests/Tests.hpp)
+                                Utility/Tests/Tests.hpp Utility/Menu.tpp Utility/Menu.hpp)

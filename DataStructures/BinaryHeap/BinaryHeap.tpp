@@ -152,3 +152,8 @@ void BinaryHeap<T>::printHeap(){
     for(int i = 0; i < this->size; i++)
         std::cout << table[i] << "\n";
 }
+
+template<typename T>
+void BinaryHeap<T>::menu() {
+
+}

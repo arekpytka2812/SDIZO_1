@@ -18,8 +18,6 @@ template<typename T>
         ListElement();
         ListElement(T, ListElement<T>*, ListElement<T>*);
 
-
-
         [[nodiscard]] T getValue() const{
             if(this != nullptr)
                 return value;
@@ -64,6 +62,8 @@ template<typename T>
         int search(T) override;
 
         void displayList();
+
+        void menu() override;
 
         DoublyLinkedList();
     };

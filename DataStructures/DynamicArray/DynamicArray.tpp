@@ -151,63 +151,46 @@ template<typename T>
 void DynamicArray<T>::addElement() {
 
     int tempChoice = {0};
-    long long duration = {0};
 
     std::cout << "Where you wanna add element?\n1. Front\n2. Middle\n3. End\n";
     std::cin >> tempChoice;
 
-    long long tempTime = {0};
-
     switch(tempChoice){
 
         case 1:
-          //  duration = addFront();
+          addFront(rand());
             break;
 
         case 2:
-         //   duration = addMiddle(6, 3);
+            add(rand(), getRandomIndex());
             break;
 
         case 3:
-          //  duration = addEnd();
+          addEnd(rand());
             break;
     }
-
-    amountOfSamples *= 2;
-
-    std::cout << "duration " << duration << std::endl;
-
 }
 
 template<typename T>
 void DynamicArray<T>::deleteElement() {
-
-    int tempSample = {rand() % 1024};
-    int tempChoice = {0};
-    long long duration = {0};
-
+    int tempChoice;
     std::cout << "Where you wanna delete element?\n1. Front\n2. Middle\n3. End\n";
     std::cin >> tempChoice;
-
-    long long tempTime = {0};
 
     switch(tempChoice){
 
         case 1:
-          //  duration = deleteFront();
+            deleteFront();
             break;
 
         case 2:
-          //  duration = deleteMiddle(3);
+            erase(getRandomValue());
             break;
 
         case 3:
-          //  duration = deleteEnd();
+            deleteEnd();
             break;
     }
-
-    std::cout << "duration " << duration << std::endl;
-
 }
 
 template<typename T>
@@ -230,6 +213,16 @@ void DynamicArray<T>::drawTable(){
 }
 
 template<typename T>
+T DynamicArray<T>::getRandomValue() {
+    return table[getRandomIndex()];
+}
+
+template<typename T>
+int DynamicArray<T>::getRandomIndex() {
+    return rand() %(this->size - 3) + 1;
+}
+
+template<typename T>
 void DynamicArray<T>::menu() {
 
     int tempChoice = 0;
@@ -248,7 +241,7 @@ void DynamicArray<T>::menu() {
                 deleteElement();
                 break;
             case 3:
-                search();
+                search(getRandomValue());
                 break;
             case 4:
                 drawTable();

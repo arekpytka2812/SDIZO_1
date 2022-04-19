@@ -182,3 +182,8 @@ void DoublyLinkedList<T>::displayList() {
 
     std::cout << "\n";
 }
+
+template<typename T>
+void DoublyLinkedList<T>::menu() {
+
+}

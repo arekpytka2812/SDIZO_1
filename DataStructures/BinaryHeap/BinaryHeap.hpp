@@ -31,6 +31,8 @@ public:
 
     void printHeap();
 
+    void menu() override;
+
 
 };
 

@@ -81,6 +81,8 @@ public:
 
     int search(T) override;
 
+    void menu() override;
+
     TreeElement<T>* searchElement(T);
 
     void print(std::ostream&);
