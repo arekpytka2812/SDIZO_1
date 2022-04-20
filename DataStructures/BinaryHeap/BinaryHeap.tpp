@@ -2,6 +2,9 @@
 
 template<typename T>
 T& BinaryHeap<T>::operator[](int position){
+
+    // overloaded operator[] to check if provided position is in range
+
     if(position < 0 or position >= this->size)
         throw std::out_of_range("You are out of range!");
     else
@@ -11,7 +14,6 @@ T& BinaryHeap<T>::operator[](int position){
 template<typename T>
 BinaryHeap<T>::BinaryHeap() {
     this->fileManager = new FileManager<T>("BinaryHeap");
-    this->timer = new Timer;
 }
 template<typename T>
 BinaryHeap<T>::~BinaryHeap(){
@@ -41,6 +43,8 @@ void BinaryHeap<T>::heapify(int i) {
 template<typename T>
 void BinaryHeap<T>::buildHeap() {
 
+    // function to build Heap
+
     int startIndex {(this->size / 2) - 1};
 
     for(int i = startIndex; i >= 0; i--)
@@ -60,6 +64,8 @@ void BinaryHeap<T>::add(T element, int position){
         return;
     }
 
+    // allocating new amount of memory for new table
+
     this->size++;
     auto tempTable = new T[this->size];
 
@@ -70,6 +76,8 @@ void BinaryHeap<T>::add(T element, int position){
 
     for(int i = position; i < this->size; i++)
         tempTable[i] = table[i - 1];
+
+    // deleting old table and setting main pointer to tempTable
 
     delete[] table;
     table = tempTable;
@@ -93,27 +101,20 @@ void BinaryHeap<T>::deleteEnd() {
 template<typename T>
 void BinaryHeap<T>::addEnd(T value) {
 
-    this->size++;
-    auto tempTable = new T[this->size];
-
-    for(int i = 0; i < this->size - 1; i++)
-        tempTable[i] = table[i];
-
-    tempTable[this->size - 1] = value;
-
-    delete[] table;
-    table = tempTable;
-    buildHeap();
+    add(value, this->size - 1);
 }
 
 template<typename T>
 int BinaryHeap<T>::erase(T value) {
 
+    // searching element position of provided value
     auto elementPosition = search(value);
 
     if(elementPosition == -1){
         return -1;
     }
+
+    //swapping root with element to erase
 
     std::swap(table[elementPosition], table[this->size - 1]);
 
@@ -134,6 +135,8 @@ int BinaryHeap<T>::erase(T value) {
 
 template<typename T>
 int BinaryHeap<T>::search(T value) {
+
+    // linear searching function
 
     if(table[0] < value)
         return -1;
@@ -158,7 +161,6 @@ void BinaryHeap<T>::menu() {
 
     int tempChoice;
     T element;
-    int position;
 
     while(true) {
 

@@ -11,7 +11,6 @@ protected:
 
     int size = 0;
 
-    Timer* timer {nullptr};
     FileManager<T>* fileManager {nullptr};
 
 public:

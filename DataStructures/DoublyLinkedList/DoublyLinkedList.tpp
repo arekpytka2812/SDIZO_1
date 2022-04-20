@@ -12,6 +12,8 @@ template<typename T>
 ListElement<T>::ListElement(T value_, ListElement<T>* previous_, ListElement<T>* next_)
 :value(value_), previous(previous_), next(next_) {
 
+    // setting up pointers
+
     if(next_ != nullptr)
         next_ ->setPrevious(this);
 
@@ -28,11 +30,13 @@ ListElement<T>::ListElement(T value_, ListElement<T>* previous_, ListElement<T>*
 template<typename T>
 DoublyLinkedList<T>::DoublyLinkedList(){
     this->fileManager = new FileManager<T>("DoublyLinkedList");
-    this->timer = new Timer;
 }
 
 template<typename T>
 ListElement<T>& DoublyLinkedList<T>::operator[](int pos) {
+
+    // checking if provided pos is closer to the tail or to the head
+    // and iterating from it
 
     if(pos >= static_cast<int>(this->size/2)){
         auto current = tail;
@@ -105,6 +109,8 @@ void DoublyLinkedList<T>::deleteFront() {
 
     auto tempHead = head;
 
+    // setting head to next element
+
     head = &(*this)[1];
     head->setPrevious(nullptr);
 
@@ -132,7 +138,6 @@ int DoublyLinkedList<T>::erase(T value) {
         deleteEnd();
         return 1;
     }
-
 
     auto tempPrevious = (*this)[position].getPrevious(), tempNext = (*this)[position].getNext();
 

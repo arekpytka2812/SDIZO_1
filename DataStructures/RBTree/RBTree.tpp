@@ -80,7 +80,6 @@ void RBTree<T>::bstInsert(TreeElement<T>* node) {
     }
     this->size++;
 
-    std::cout << this->size << std::endl;
 }
 
 template<typename T>

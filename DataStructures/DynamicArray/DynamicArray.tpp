@@ -6,7 +6,6 @@
 template<typename T>
 DynamicArray<T>::DynamicArray() {
     this->fileManager = new FileManager<T>("DynamicArray");
-    this->timer = new Timer;
 }
 
 template<typename T>
@@ -17,6 +16,8 @@ DynamicArray<T>::~DynamicArray() {
 
 template<typename T>
 T& DynamicArray<T>::operator[](int position) {
+
+    // overloaded operator to check if provided position is in range
 
     if(position < 0 && position >= this->size)
         throw std::out_of_range("You are out of range!");
@@ -30,8 +31,6 @@ T& DynamicArray<T>::operator[](int position) {
 template<typename T>
 void DynamicArray<T>::addFront(T element) {
 
-        this->timer->startTimer();
-
         this->size++;
 
         auto tempTable = new T [this->size];
@@ -44,8 +43,6 @@ void DynamicArray<T>::addFront(T element) {
         delete[] table;
         table = tempTable;
         tempTable = nullptr;
-
-        this->timer->stopTimer();
 }
 
 template<typename T>
