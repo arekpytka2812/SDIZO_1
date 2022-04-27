@@ -26,15 +26,20 @@ void Tests<T>::addFront(DataStructure<T> *structure) {
                     structure->add(structure->getManager()->readData(), -1);
             }
 
-            timer->startTimer();
+            double time = 0;
 
             for(int k = 0; k < 100; k++){
+
+                timer->startTimer();
                 structure->addFront(this->getRandomData());
+                time += timer->getDuration();
+
+                structure->deleteFront();
             }
 
-            auto time = timer->getDuration()/100;
+            time /= 100; // dividing by amount of iterations
 
-            structure->getManager()->writeToFile(0, time, amountOfData);
+            structure->getManager()->autoWriteToFile(0, time, amountOfData);
 
             while(structure->getSize() != 0)
                 structure->deleteFront();
@@ -54,18 +59,21 @@ void Tests<T>::add(DataStructure<T>* structure){
         auto amountOfData = structure->getManager()->readData();
 
         for(int j = 0; j < amountOfData; j++){
-            structure->add(structure->getManager()->readData(), -1);
+            structure->add(structure->getManager()->readData(), structure->getSize());
         }
 
-        timer->startTimer();
+        double time = 0;
 
         for(int k = 0; k < 100; k++){
+            timer->startTimer();
             structure->add(this->getRandomData(), this->getRandomIndex(structure));
+            time += timer->getDuration();
+            structure->deleteFront();
         }
 
-        auto time = timer->getDuration()/100;
+        time /= 100;
 
-        structure->getManager()->writeToFile(1, time, amountOfData);
+        structure->getManager()->autoWriteToFile(1, time, amountOfData);
 
         while(structure->getSize() != 0)
             structure->deleteFront();
@@ -86,20 +94,22 @@ void Tests<T>::addEnd(DataStructure<T>* structure){
             auto amountOfData = structure->getManager()->readData();
 
             for(int j = 0; j < amountOfData; j++){
-
                 // filling structure with samples
                 structure->add(structure->getManager()->readData(), -1);
             }
 
-            timer->startTimer();
+            double time = 0;
 
             for(int k = 0; k < 100; k++){
+                timer->startTimer();
                 structure->addEnd(this->getRandomData());
+                time += timer->getDuration();
+                structure->deleteFront();
             }
 
-            auto time = timer->getDuration()/100;
+            time /= 100;
 
-            structure->getManager()->writeToFile(2, time, amountOfData);
+            structure->getManager()->autoWriteToFile(2, time, amountOfData);
 
             while(structure->getSize() != 0)
                 structure->deleteFront();
@@ -127,15 +137,18 @@ void Tests<T>::deleteFront(DataStructure<T>* structure){
                 structure->add(structure->getManager()->readData(), -1);
             }
 
-            timer->startTimer();
+            double time = 0;
 
             for(int k = 0; k < 100; k++){
+                timer->startTimer();
                 structure->deleteFront();
+                time += timer->getDuration();
+                structure->addFront(getRandomData());
             }
 
-            auto time = timer->getDuration()/100;
+            time /= 100;
 
-            structure->getManager()->writeToFile(3, time, amountOfData);
+            structure->getManager()->autoWriteToFile(3, time, amountOfData);
 
             while(structure->getSize() != 0)
                 structure->deleteFront();
@@ -154,22 +167,29 @@ void Tests<T>::erase(DataStructure<T>* structure){
         auto amountOfData = structure->getManager()->readData();
 
         for(int j = 0; j < amountOfData; j++){
-            structure->add(structure->getManager()->readData(), -1);
+            structure->add(structure->getManager()->readData(), structure->getSize());
         }
 
-        timer->startTimer();
+        double time = 0;
 
         int successfulSamples = 0;
 
         for(int k = 0; k < 100; k++){
+
+            timer->startTimer();
+
             if((structure->erase(this->getRandomData())) != -1) {
+                time += timer->getDuration();
                 successfulSamples++;
+                structure->addFront(getRandomData());
             }
+            else
+                timer->getDuration();
         }
 
-        auto time = timer->getDuration()/successfulSamples;
+        time /= successfulSamples;
 
-        structure->getManager()->writeToFile(4, time, amountOfData);
+        structure->getManager()->autoWriteToFile(4, time, amountOfData);
 
         while(structure->getSize() != 0)
             structure->deleteFront();
@@ -196,15 +216,18 @@ void Tests<T>::deleteEnd(DataStructure<T>* structure){
                 structure->add(structure->getManager()->readData(), -1);
             }
 
-            timer->startTimer();
+            double time = 0;
 
             for(int k = 0; k < 100; k++){
+                timer->startTimer();
                 structure->deleteEnd();
+                time += timer->getDuration();
+                structure->addFront(getRandomData());
             }
 
-            auto time = timer->getDuration()/100;
+            time /= 100;
 
-            structure->getManager()->writeToFile(5, time, amountOfData);
+            structure->getManager()->autoWriteToFile(5, time, amountOfData);
 
             while(structure->getSize() != 0)
                 structure->deleteFront();
@@ -223,24 +246,28 @@ void Tests<T>::search(DataStructure<T>* structure){
         auto amountOfData = structure->getManager()->readData();
 
         for(int j = 0; j < amountOfData; j++){
-            structure->add(structure->getManager()->readData(), -1);
+            structure->add(structure->getManager()->readData(), structure->getSize());
         }
 
-        timer->startTimer();
-
+        double time = 0;
         int successfulSamples = 0;
 
         for(int k = 0; k < 100; k++){
 
+            timer->startTimer();
             if((structure->search(this->getRandomData())) != -1){
+                time += timer->getDuration();
                 successfulSamples++;
+                structure->addFront(getRandomData());
             }
+            else
+                timer->getDuration();
 
         }
 
-        auto time = timer->getDuration()/successfulSamples;
+        time /= successfulSamples;
 
-        structure->getManager()->writeToFile(6, time, amountOfData);
+        structure->getManager()->autoWriteToFile(6, time, amountOfData);
 
         while(structure->getSize() != 0)
             structure->deleteFront();

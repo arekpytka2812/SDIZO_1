@@ -71,6 +71,8 @@ template<typename T>
 
         void menu() override;
 
+        void createStructure() override;
+
         DoublyLinkedList();
     };
 

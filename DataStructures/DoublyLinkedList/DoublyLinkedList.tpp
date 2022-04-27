@@ -82,6 +82,11 @@ void DoublyLinkedList<T>::add(T element, int position) {
         return;
     }
 
+    if(position > this->size + 1){
+        std::cout << "Provided position is out of range, cannot add element!\n";
+        return;
+    }
+
     if(position > 0 && position < this->size - 1) {
         auto tempNext = &(*this)[position], tempPrevious = &(*this)[position - 1];
 
@@ -181,7 +186,7 @@ void DoublyLinkedList<T>::displayList() {
     auto current = head;
 
     for(int i = 0; i < this->size; i++){
-        std::cout << current->getPrevious()->getValue() << "<-" << current->getValue() << "->" << current->getNext()->getValue() << "\n";
+        std::cout << current->getPrevious()->getValue() << " <- " << current->getValue() << " -> " << current->getNext()->getValue() << "\n";
         current = current->getNext();
     }
 
@@ -193,10 +198,12 @@ void DoublyLinkedList<T>::menu() {
 
     int tempChoice = 0;
     T element;
+    int foundIndex = 0;
 
     while(true){
 
-        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n"
+            << "5. Write data to file\n6. Create structure from file\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
@@ -210,14 +217,41 @@ void DoublyLinkedList<T>::menu() {
             case 3:
                 std::cout << "Type value: \n";
                 std::cin >> element;
-                search(element);
+
+                foundIndex = search(element);
+
+                if(foundIndex == -1)
+                    std::cout << "Couldn't find provided element!\n";
+                else
+                    std::cout << "Element found at index: " << foundIndex << std::endl;
+
                 break;
             case 4:
                 displayList();
                 break;
+            case 5:
+                this->fileManager->manualWriteToFile();
+                break;
+            case 6:
+                this->createStructure();
+                break;
+            case 7:
+                exit(0);
             default:
                 return;
         }
+    }
+}
+
+template<typename T>
+void DoublyLinkedList<T>::createStructure() {
+
+    T element;
+    int dataSize = this->fileManager->readManualData();
+
+    for(int i = 0; i < dataSize; i++){
+        element = this->fileManager->readManualData();
+        this->addFront(element);
     }
 }
 
@@ -254,6 +288,11 @@ void DoublyLinkedList<T>::addElement(){
 template<typename T>
 void DoublyLinkedList<T>::deleteElement() {
 
+    if(this->size == 0){
+        std::cout << "List is already empty, cannot delete!\n";
+        return;
+    }
+
     int tempChoice;
     T element;
 
@@ -270,7 +309,11 @@ void DoublyLinkedList<T>::deleteElement() {
             std::cout << "Type value: \n";
             std::cin >> element;
 
-            erase(element);
+            if(erase(element) == -1)
+                std::cout << "Element not found! Couldn't delete.\n";
+            else
+                std::cout << "Element deleted successfully!\n";
+
             break;
 
         case 3:

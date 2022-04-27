@@ -27,6 +27,8 @@ class DynamicArray : public DataStructure<T>{
 
     int search(T) override;
 
+    void createStructure() override;
+
     void addElement();
     void deleteElement();
 

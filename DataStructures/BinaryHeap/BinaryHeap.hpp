@@ -35,6 +35,8 @@ public:
 
     void menu() override;
 
+    void createStructure() override;
+
 
 };
 

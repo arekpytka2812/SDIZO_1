@@ -215,7 +215,6 @@ template<typename T>
 RBTree<T>::RBTree() {
 
     this->fileManager = new FileManager<T>("RBTree");
-    this->timer = new Timer;
 
     guardian.setGuardian();
 
@@ -582,7 +581,8 @@ void RBTree<T>::menu() {
 
     while(true){
 
-        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n"
+            << "4. Draw\n5. Write data to file\n6. Create structure from file\n7. Exit\n";
         std::cin >> tempChoice;
         
         switch (tempChoice) {
@@ -597,7 +597,11 @@ void RBTree<T>::menu() {
                 std::cout << "Type value: \n";
                 std::cin >> element;
 
-                erase(element);
+                if(erase(element) == -1)
+                    std::cout << "Element not found! Couldn't delete.\n";
+                else
+                    std::cout << "Element deleted successfully!\n";
+
                 break;
             case 3:
                 std::cout << "Type value: \n";
@@ -608,8 +612,28 @@ void RBTree<T>::menu() {
             case 4:
                 print(std::cout);
                 break;
+            case 5:
+                this->fileManager->manualWriteToFile();
+                break;
+            case 6:
+                this->createStructure();
+                break;
+            case 7:
+                exit(0);
             default:
                 return;
         }
+    }
+}
+
+template<typename T>
+void RBTree<T>::createStructure() {
+
+    T element;
+    int dataSize = this->fileManager->readManualData();
+
+    for(int i = 0; i < dataSize; i++){
+        element = this->fileManager->readManualData();
+        this->add(element, -1);
     }
 }

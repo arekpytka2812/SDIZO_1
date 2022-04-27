@@ -66,8 +66,6 @@ public:
 
     RBTree();
 
-    TreeElement<T>& operator[](int);
-
     void rotateLeft(TreeElement<T>*);
     void rotateRight(TreeElement<T>*);
 
@@ -80,6 +78,8 @@ public:
     int erase(T) override;
 
     int search(T) override;
+
+    void createStructure() override;
 
     void menu() override;
 

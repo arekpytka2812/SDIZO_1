@@ -17,7 +17,6 @@ public:
 
     Timer() = default;
 
-    void stopTimer();
     void startTimer();
 
     double getDuration(){

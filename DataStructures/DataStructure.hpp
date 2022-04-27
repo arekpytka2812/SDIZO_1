@@ -35,6 +35,8 @@ public:
 
     virtual void menu() = 0;
 
+    virtual void createStructure() = 0;
+
 };
 
 

@@ -20,7 +20,7 @@ T& DynamicArray<T>::operator[](int position) {
     // overloaded operator to check if provided position is in range
 
     if(position < 0 && position >= this->size)
-        throw std::out_of_range("You are out of range!");
+        throw std::out_of_range("You are out of range!\n");
 
     else{
         return *(table+position);
@@ -53,21 +53,35 @@ void DynamicArray<T>::add(T element, int position) {
         return;
     }
 
-    this->size++;
+    if(this->size == 0){
+        table = new int;
+        table[0] = element;
+        this->size++;
+        return;
+    }
 
-    auto tempTable = new T[this->size];
+    if(position > this->size + 1){
+        std::cout << "You are out of range, cannot add element!\n";
+        return;
+    }
 
-    for(int i = 0; i < position - 1; i++)
-        tempTable[i] = table[i];
+        this->size++;
 
-    tempTable[position - 1] = element;
+        auto tempTable = new T[this->size];
 
-    for(int i = position; i < this->size; i++)
-        tempTable[i] = table[i - 1];
+        for(int i = 0; i < position - 1; i++)
+            tempTable[i] = table[i];
 
-    delete[] table;
-    table = tempTable;
-    tempTable = nullptr;
+        tempTable[position - 1] = element;
+
+        for(int i = position; i < this->size; i++)
+            tempTable[i] = table[i - 1];
+
+        delete[] table;
+        table = tempTable;
+        tempTable = nullptr;
+
+
 
 }
 
@@ -167,6 +181,7 @@ void DynamicArray<T>::addElement() {
             std::cin >> pos;
 
             add(element, pos);
+
             break;
 
         case 3:
@@ -177,6 +192,11 @@ void DynamicArray<T>::addElement() {
 
 template<typename T>
 void DynamicArray<T>::deleteElement() {
+
+    if(this->size == 0){
+        std::cout << "Array is already empty, cannot delete\n";
+        return;
+    }
 
     int tempChoice;
     T element;
@@ -194,7 +214,11 @@ void DynamicArray<T>::deleteElement() {
             std::cout << "Type value: \n";
             std::cin >> element;
 
-            erase(element);
+            if(erase(element) == -1)
+                std::cout << "Element not found! Couldn't delete.\n";
+            else
+                std::cout << "Element deleted successfully!\n";
+
             break;
 
         case 3:
@@ -219,7 +243,7 @@ template<typename T>
 void DynamicArray<T>::drawTable(){
 
     for(int i = 0; i < this->size; i++)
-        std::cout << table[i] << "\n";
+        std::cout <<"[" << i << "] - > " << table[i] << "\n";
 }
 
 template<typename T>
@@ -237,10 +261,12 @@ void DynamicArray<T>::menu() {
 
     int tempChoice = 0;
     T element;
+    int foundIndex;
 
     while(true){
 
-        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n"
+            << "4. Draw\n5. Write data to file\n6. Create structure\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
@@ -254,14 +280,40 @@ void DynamicArray<T>::menu() {
             case 3:
                 std::cout << "Type value: \n";
                 std::cin >> element;
-                search(element);
+
+                foundIndex = search(element);
+
+                if(foundIndex == -1)
+                    std::cout << "Element not found!\n";
+                else
+                    std::cout << "Element found at index: " << foundIndex << std::endl;
                 break;
             case 4:
                 drawTable();
                 break;
+            case 5:
+                this->fileManager->manualWriteToFile();
+                break;
+            case 6:
+                this->createStructure();
+                break;
+            case 7:
+                exit(0);
             default:
                 return;
         }
+    }
+}
+
+template<typename T>
+void DynamicArray<T>::createStructure() {
+
+    T element;
+    int dataSize = this->fileManager->readManualData();
+
+    for(int i = 0; i < dataSize; i++){
+        element = this->fileManager->readManualData();
+        this->addFront(element);
     }
 }
 

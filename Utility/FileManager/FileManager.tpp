@@ -5,11 +5,14 @@ bool FileManager<T>::isDirectoryCreated(int whichOne) {
 
     switch(whichOne){
         case 0:
-            return std::experimental::filesystem::is_directory(dataPath);
-            break;
+            return std::experimental::filesystem::is_directory(autoDataPath);
         case 1:
             return std::experimental::filesystem::is_directory(logFilePath);
-            break;
+        case 2:
+            return std::experimental::filesystem::is_directory(manualDataPath);
+        default:
+            return false;
+
     }
 }
 
@@ -18,26 +21,32 @@ bool FileManager<T>::isFileCreated(int whichOne) {
 
     switch(whichOne){
         case 0:
-            return std::experimental::filesystem::exists(dataPath);
+            return std::experimental::filesystem::exists(autoDataPath);
             break;
         case 1:
             return std::experimental::filesystem::exists(logFilePath);
+            break;
+        case 2:
+            return std::experimental::filesystem::exists(manualDataPath);
+            break;
+        default:
             break;
     }
 }
 
 template<typename T>
-void FileManager<T>::prepareSamples() {
+void FileManager<T>::autoPrepareSamples() {
 
     while(amountCounter < 5) {
-        dataFile << FileManager::amountOfData[amountCounter] << "\n";
+
+        autoDataFile << FileManager::amountOfData[amountCounter] << "\n";
 
         for (int i = 0; i < FileManager::amountOfData[amountCounter]; i++) {
-            dataFile << rand() % 32255 << "\n";
+            autoDataFile << rand() << "\n";
         }
 
         amountCounter++;
-        dataFile.flush();
+        autoDataFile.flush();
     }
 }
 
@@ -46,46 +55,62 @@ FileManager<T>::FileManager(std::string dataType_){
 
     this->dataType = dataType_;
 
-    dataPath = "../DataToTest";
-    logFilePath = "../LogFiles";
+    autoDataPath = "../Files/DataToTest";
+    logFilePath = "../Files/LogFiles";
+    manualDataPath = "../Files/ManualData";
 
     if(not isDirectoryCreated(0))
-        std::experimental::filesystem::create_directory(dataPath);
+        std::experimental::filesystem::create_directory(autoDataPath);
 
     if(not isDirectoryCreated(1))
         std::experimental::filesystem::create_directory(logFilePath);
 
-    dataPath = "../DataToTest/" + dataType + "Data.txt";
-    logFilePath = "../LogFiles/" + dataType + "Log.txt";
+    if(not isDirectoryCreated(2))
+        std::experimental::filesystem::create_directory(manualDataPath);
 
-    dataFile.open(dataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in);
+
+    autoDataPath = "../Files/DataToTest/" + dataType + "Data.txt";
+    logFilePath = "../Files/LogFiles/" + dataType + "Log.txt";
+    manualDataPath = "../Files/ManualData/" + dataType + "ManualData.txt";
+
+    autoDataFile.open(autoDataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in);
     logFile.open(logFilePath.c_str(), std::fstream::out | std::fstream::trunc);
+    manualDataFile.open(manualDataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in );
 
-    prepareSamples();
+    autoPrepareSamples();
 
-    dataFile.clear();
-    dataFile.seekg(0);
+    autoDataFile.clear();
+    autoDataFile.seekg(0);
 
     logFile.clear();
     logFile.seekg(0);
+
+    manualDataFile.clear();
+    manualDataFile.seekg(0);
+
 }
 
 template<typename T>
 FileManager<T>::~FileManager() {
 
-    if(dataFile.is_open()) {
-        dataFile.flush();
-        dataFile.close();
+    if(autoDataFile.is_open()) {
+        autoDataFile.flush();
+        autoDataFile.close();
     }
 
     if(logFile.is_open()){
         logFile.flush();
         logFile.close();
     }
+
+    if(manualDataFile.is_open()){
+        manualDataFile.flush();
+        manualDataFile.close();
+    }
 }
 
 template<typename T>
-void FileManager<T>::writeToFile(int operation, double timeValue, int amountData) {
+void FileManager<T>::autoWriteToFile(int operation, double timeValue, int amountData) {
 
     switch(operation){
         case 0: //add front
@@ -128,16 +153,57 @@ void FileManager<T>::writeToFile(int operation, double timeValue, int amountData
 
 template<typename T>
 T FileManager<T>::readData(){
-    if(dataFile.good()) {
+    if(autoDataFile.good()) {
         T tempValue;
-        dataFile >> tempValue;
+        autoDataFile >> tempValue;
         return tempValue;
     }
     return -1;
 }
 
 template<typename T>
+void FileManager<T>::manualWriteToFile() {
+
+    std::string valuesToFile;
+    int dataSize = 0;
+
+    std::string delimeter = " ";
+    int values = 0;
+
+    std::cout << "Write amount of data: \n";
+    std::cin >> dataSize;
+
+    manualDataFile << dataSize << std::endl;
+    manualDataFile.flush();
+
+    std::cout << "Write values: \n";
+
+    for(int i = 0; i < dataSize; i++){
+
+        std::cin >> values;
+        manualDataFile << values << std::endl;
+
+    }
+
+    manualDataFile.flush();
+    manualDataFile.clear();
+    manualDataFile.seekg(0);
+
+}
+
+template<typename T>
+T FileManager<T>::readManualData() {
+
+    if(manualDataFile.good()){
+        T element;
+        manualDataFile >> element;
+        return element;
+    }
+    return -1;
+}
+
+template<typename T>
 void FileManager<T>::setPointer() {
-    dataFile.clear();
-    dataFile.seekg(0);
+    autoDataFile.clear();
+    autoDataFile.seekg(0);
 }

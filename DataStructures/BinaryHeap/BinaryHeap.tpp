@@ -53,11 +53,18 @@ void BinaryHeap<T>::buildHeap() {
 
 template<typename T>
 void BinaryHeap<T>::addFront(T element) {
-    addEnd(element);
+    add(element, 1);
 }
 
 template<typename T>
 void BinaryHeap<T>::add(T element, int position){
+
+    if(this->size == 0){
+        this->size++;
+        this->table = new T;
+        table[0] = element;
+        return;
+    }
 
     if(position == -1){
         addEnd(element);
@@ -94,7 +101,7 @@ void BinaryHeap<T>::deleteFront() {
 
 template<typename T>
 void BinaryHeap<T>::deleteEnd() {
-    erase(table[this->size - 1]);
+    erase(table[this->size]);
 }
 
 
@@ -164,26 +171,64 @@ void BinaryHeap<T>::menu() {
 
     while(true) {
 
-        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n5. Exit\n";
+        std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n"
+            << "5. Write data to file\n6. Create structure from file\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
 
             case 1:
-                add(element, -1);
+                std::cout << "Type value to add: \n";
+                std::cin >> element;
+                addEnd(element);
                 break;
             case 2:
-                erase(element);
+                std::cout << "Type value to erase: \n";
+                std::cin >> element;
+
+                if(erase(element) == -1)
+                    std::cout << "Element not found! Couldn't erase.\n";
+
+                else
+                    std::cout << "Element erased successfully!\n";
+
                 break;
             case 3:
-                search(element);
+                std::cout << "Type value to search: \n";
+                std::cin >> element;
+
+                if(search(element) == -1)
+                    std::cout << "Element not found!\n";
+
+                else
+                    std::cout << "Element found!\n";
                 break;
             case 4:
                 printHeap();
                 break;
+            case 5:
+                this->fileManager->manualWriteToFile();
+                break;
+            case 6:
+                this->createStructure();
+                break;
+            case 7:
+                exit(0);
             default:
                 return;
         }
+    }
+}
+
+template<typename T>
+void BinaryHeap<T>::createStructure() {
+
+    T element;
+    int dataSize = this->fileManager->readManualData();
+
+    for(int i = 0; i < dataSize; i++){
+        element = this->fileManager->readManualData();
+        this->addFront(element);
     }
 }
 

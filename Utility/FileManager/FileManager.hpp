@@ -10,27 +10,33 @@ template<typename T>
 class FileManager {
 
     std::string dataType;
-    std::fstream dataFile;
-    std::fstream logFile;
 
-    std::string dataPath;
+    std::fstream autoDataFile;
+    std::fstream logFile;
+    std::fstream manualDataFile;
+
+    std::string autoDataPath;
     std::string logFilePath;
+    std::string manualDataPath;
 
     bool isDirectoryCreated(int);
     bool isFileCreated(int);
 
-    void prepareSamples();
+    void autoPrepareSamples();
 
 public:
 
     const int amountOfData[5] = {1000, 2000, 5000, 10000, 20000};
     int amountCounter {0};
 
-    FileManager(std::string);
+    explicit FileManager(std::string);
     ~FileManager();
 
-    void writeToFile(int, double, int);
+    void autoWriteToFile(int, double, int);
     T readData();
+
+    void manualWriteToFile();
+    T readManualData();
 
     void setPointer();
 };
