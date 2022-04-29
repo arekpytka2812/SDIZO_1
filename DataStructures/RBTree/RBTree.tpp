@@ -453,11 +453,9 @@ void RBTree<T>::print(std::ostream& out)
 {
     if (this->root != &guardian)
     {
-        // Calculate tree depth
         size_t depth = 0;
         calculateDepth(this->root, depth, 0);
 
-        // Calculate maximum number of nodes
         size_t size = pow(2, depth);
 
         // Create table to get access to all nodes
@@ -478,7 +476,6 @@ void RBTree<T>::print(std::ostream& out)
         size_t last = 1;
         size--;
 
-        // Calculate the maximum number of nodes at the current heap level
         size_t space = size;
 
         while (!outOfBound)
@@ -501,7 +498,7 @@ void RBTree<T>::print(std::ostream& out)
                     // Display node
                     int color = table[i]->color == TreeElement<T>::Color::RED ? 12 : 8;
                     SetConsoleTextAttribute(hConsole, color);
-                    out << '[' << table[i]->getValue() << ']' << std::string(space * 3, ' ');
+                    out << '(' << table[i]->getValue() << ')' << std::string(space * 3, ' ');
                     continue;
                 }
 
@@ -521,7 +518,6 @@ void RBTree<T>::print(std::ostream& out)
         // Set back default console color
         SetConsoleTextAttribute(hConsole, 15);
 
-        // Delete table for storing nodes
         delete[] table;
 
         return;
@@ -541,13 +537,11 @@ void RBTree<T>::calculateDepth(TreeElement<T>* node, size_t& maxDepth, size_t cu
         maxDepth = currentDepth;
     }
 
-    // Check if left child is not guardian
     if (node->getLeft() != &guardian)
     {
         calculateDepth(node->getLeft(), maxDepth, currentDepth);
     }
 
-    // Check if right child is not guardian
     if (node->getRight() != &guardian)
     {
         calculateDepth(node->getRight(), maxDepth, currentDepth);
@@ -557,16 +551,15 @@ void RBTree<T>::calculateDepth(TreeElement<T>* node, size_t& maxDepth, size_t cu
 template<typename T>
 void RBTree<T>::placeNodes(TreeElement<T>* node, TreeElement<T>** table, size_t index)
 {
-    // Place node in table
+    //placing node and its children into table
+
     table[index] = node;
 
-    // Check if exists left child
     if (node->getLeft() != &guardian)
     {
         placeNodes(node->getLeft(), table, 2 * index + 1);
     }
 
-    // Check if exists right child
     if (node->getRight() != &guardian)
     {
         placeNodes(node->getRight(), table, 2 * index + 2);

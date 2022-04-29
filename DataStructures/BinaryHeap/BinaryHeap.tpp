@@ -159,8 +159,35 @@ int BinaryHeap<T>::search(T value) {
 template<typename T>
 void BinaryHeap<T>::printHeap(){
 
-    for(int i = 0; i < this->size; i++)
-        std::cout << table[i] << "\n";
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    int cols;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    cols = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+
+    int height = log2(this->size)+1;
+    int row_len = 1;
+    int offset = cols / (row_len+1);
+    int node_index = 0;
+
+    for (int h = 0; h < height; h++)
+    {
+        for (int r = 0; r < row_len; r++)
+        {
+            if (node_index == this->size){
+                std::cout << std::endl;
+                return;
+            }
+
+            for (int i = 0; i < offset; i++)
+                std::cout << ' ';
+            std::cout << table[node_index];
+            node_index++;
+        }
+
+        std::cout << "\n\n\n\n";
+        row_len *= 2;
+        offset = cols / (row_len+1);
+    }
 }
 
 template<typename T>

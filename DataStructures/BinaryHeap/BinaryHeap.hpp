@@ -4,6 +4,7 @@
 #include "../DataStructure.hpp"
 
 #include <iostream>
+#include <cmath>
 
 template<typename T>
 class BinaryHeap: public DataStructure<T> {
