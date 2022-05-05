@@ -88,6 +88,12 @@ void DynamicArray<T>::add(T element, int position) {
 template<typename T>
 void DynamicArray<T>::addEnd(T element) {
 
+    if(this->size == 0){
+        table = new T;
+        table[0] = element;
+        this->size++;
+    }
+
     this->size++;
 
     auto tempTable = new T[this->size];
@@ -266,7 +272,7 @@ void DynamicArray<T>::menu() {
     while(true){
 
         std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n"
-            << "4. Draw\n5. Write data to file\n6. Create structure\n7. Exit\n";
+            << "4. Draw\n5. Include file\n6. Create structure from included file\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
@@ -292,14 +298,12 @@ void DynamicArray<T>::menu() {
                 drawTable();
                 break;
             case 5:
-                this->fileManager->manualWriteToFile();
+                this->fileManager->openManualData();
                 break;
             case 6:
                 this->createStructure();
                 break;
             case 7:
-                exit(0);
-            default:
                 return;
         }
     }
@@ -309,12 +313,18 @@ template<typename T>
 void DynamicArray<T>::createStructure() {
 
     T element;
+
     int dataSize = this->fileManager->readManualData();
 
+    std::cout << dataSize;
+
     for(int i = 0; i < dataSize; i++){
+        std::cout << "cipa\n";
         element = this->fileManager->readManualData();
-        this->addFront(element);
+        this->addEnd(element);
     }
+
+    this->fileManager->setPointer();
 }
 
 #endif

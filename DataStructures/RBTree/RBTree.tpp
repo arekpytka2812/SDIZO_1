@@ -575,7 +575,7 @@ void RBTree<T>::menu() {
     while(true){
 
         std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n"
-            << "4. Draw\n5. Write data to file\n6. Create structure from file\n7. Exit\n";
+            << "4. Draw\n5. Include file\n6. Create structure from included file\n7. Exit\n";
         std::cin >> tempChoice;
         
         switch (tempChoice) {
@@ -606,14 +606,12 @@ void RBTree<T>::menu() {
                 print(std::cout);
                 break;
             case 5:
-                this->fileManager->manualWriteToFile();
+                this->fileManager->openManualData();
                 break;
             case 6:
                 this->createStructure();
                 break;
             case 7:
-                exit(0);
-            default:
                 return;
         }
     }

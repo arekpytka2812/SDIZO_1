@@ -8,8 +8,6 @@ bool FileManager<T>::isDirectoryCreated(int whichOne) {
             return std::experimental::filesystem::is_directory(autoDataPath);
         case 1:
             return std::experimental::filesystem::is_directory(logFilePath);
-        case 2:
-            return std::experimental::filesystem::is_directory(manualDataPath);
         default:
             return false;
 
@@ -25,9 +23,6 @@ bool FileManager<T>::isFileCreated(int whichOne) {
             break;
         case 1:
             return std::experimental::filesystem::exists(logFilePath);
-            break;
-        case 2:
-            return std::experimental::filesystem::exists(manualDataPath);
             break;
         default:
             break;
@@ -57,7 +52,6 @@ FileManager<T>::FileManager(std::string dataType_){
 
     autoDataPath = "../Files/DataToTest";
     logFilePath = "../Files/LogFiles";
-    manualDataPath = "../Files/ManualData";
 
     if(not isDirectoryCreated(0))
         std::experimental::filesystem::create_directory(autoDataPath);
@@ -65,17 +59,13 @@ FileManager<T>::FileManager(std::string dataType_){
     if(not isDirectoryCreated(1))
         std::experimental::filesystem::create_directory(logFilePath);
 
-    if(not isDirectoryCreated(2))
-        std::experimental::filesystem::create_directory(manualDataPath);
 
 
     autoDataPath = "../Files/DataToTest/" + dataType + "Data.txt";
     logFilePath = "../Files/LogFiles/" + dataType + "Log.txt";
-    manualDataPath = "../Files/ManualData/" + dataType + "ManualData.txt";
 
     autoDataFile.open(autoDataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in);
     logFile.open(logFilePath.c_str(), std::fstream::out | std::fstream::trunc);
-    manualDataFile.open(manualDataPath.c_str(), std::fstream::out | std::fstream::trunc | std::fstream::in );
 
     autoPrepareSamples();
 
@@ -104,7 +94,6 @@ FileManager<T>::~FileManager() {
     }
 
     if(manualDataFile.is_open()){
-        manualDataFile.flush();
         manualDataFile.close();
     }
 }
@@ -162,39 +151,20 @@ T FileManager<T>::readData(){
 }
 
 template<typename T>
-void FileManager<T>::manualWriteToFile() {
+void FileManager<T>::openManualData() {
 
-    std::string valuesToFile;
-    int dataSize = 0;
+    std::cout << "Type file name:\n";
+    std::cin >> manualDataPath;
 
-    std::string delimeter = " ";
-    int values = 0;
+    manualDataFile.open(manualDataPath.c_str());
 
-    std::cout << "Write amount of data: \n";
-    std::cin >> dataSize;
-
-    manualDataFile << dataSize << std::endl;
-    manualDataFile.flush();
-
-    std::cout << "Write values: \n";
-
-    for(int i = 0; i < dataSize; i++){
-
-        std::cin >> values;
-        manualDataFile << values << std::endl;
-
-    }
-
-    manualDataFile.flush();
-    manualDataFile.clear();
     manualDataFile.seekg(0);
-
 }
 
 template<typename T>
 T FileManager<T>::readManualData() {
 
-    if(manualDataFile.good()){
+    if(manualDataFile.is_open()) {
         T element;
         manualDataFile >> element;
         return element;
@@ -204,6 +174,6 @@ T FileManager<T>::readManualData() {
 
 template<typename T>
 void FileManager<T>::setPointer() {
-    autoDataFile.clear();
-    autoDataFile.seekg(0);
+    manualDataFile.clear();
+    manualDataFile.seekg(0);
 }

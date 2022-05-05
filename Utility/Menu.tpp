@@ -8,6 +8,7 @@ void Menu<T>::manualTests() {
     while(choice != 5){
 
         std::cout << listOfStructures;
+        std::cout << "5. Exit\n";
         std::cin >> choice;
 
         switch(choice){
@@ -24,9 +25,7 @@ void Menu<T>::manualTests() {
                 data[3]->menu();
                 break;
             case 5:
-                exit(0);
-            default:
-                break;
+                return;
         }
     }
 
@@ -224,7 +223,7 @@ Menu<T>::~Menu() {
 template<typename T>
 void Menu<T>::mainMenu() {
 
-    std::string whichTests = "Chooose kind of tests.\n1. Manual\n2. Automatic\n";
+    std::string whichTests = "Chooose kind of tests.\n1. Manual\n2. Automatic\n3. Exit\n";
     int choiceOfTests = 0;
 
     std::cout << whichTests;
@@ -237,6 +236,8 @@ void Menu<T>::mainMenu() {
         case 2:
             automaticTests();
             break;
+        case 3:
+            exit(0);
         default:
             return;
     }

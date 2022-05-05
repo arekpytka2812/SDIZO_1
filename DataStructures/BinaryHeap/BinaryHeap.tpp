@@ -108,7 +108,7 @@ void BinaryHeap<T>::deleteEnd() {
 template<typename T>
 void BinaryHeap<T>::addEnd(T value) {
 
-    add(value, this->size - 1);
+    add(value, this->size);
 }
 
 template<typename T>
@@ -119,6 +119,13 @@ int BinaryHeap<T>::erase(T value) {
 
     if(elementPosition == -1){
         return -1;
+    }
+
+    if(this->size - 1 == 0){
+        delete[] table;
+        table = nullptr;
+        this->size--;
+        return 1;
     }
 
     //swapping root with element to erase
@@ -199,7 +206,7 @@ void BinaryHeap<T>::menu() {
     while(true) {
 
         std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n"
-            << "5. Write data to file\n6. Create structure from file\n7. Exit\n";
+            << "5. Include file\n6. Create structure from included file\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
@@ -210,6 +217,12 @@ void BinaryHeap<T>::menu() {
                 addEnd(element);
                 break;
             case 2:
+
+                if(this->size == 0){
+                    std::cout << "Heap is already empty!\n";
+                    break;
+                }
+
                 std::cout << "Type value to erase: \n";
                 std::cin >> element;
 
@@ -234,14 +247,12 @@ void BinaryHeap<T>::menu() {
                 printHeap();
                 break;
             case 5:
-                this->fileManager->manualWriteToFile();
+                this->fileManager->openManualData();
                 break;
             case 6:
                 this->createStructure();
                 break;
             case 7:
-                exit(0);
-            default:
                 return;
         }
     }

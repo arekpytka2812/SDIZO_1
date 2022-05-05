@@ -13,7 +13,7 @@ class FileManager {
 
     std::fstream autoDataFile;
     std::fstream logFile;
-    std::fstream manualDataFile;
+    std::ifstream manualDataFile;
 
     std::string autoDataPath;
     std::string logFilePath;
@@ -35,7 +35,7 @@ public:
     void autoWriteToFile(int, double, int);
     T readData();
 
-    void manualWriteToFile();
+    void openManualData();
     T readManualData();
 
     void setPointer();

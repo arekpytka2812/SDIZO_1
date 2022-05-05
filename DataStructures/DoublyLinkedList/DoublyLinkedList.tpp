@@ -203,7 +203,7 @@ void DoublyLinkedList<T>::menu() {
     while(true){
 
         std::cout << "1. Add Element\n2. Delete Element\n3. Search Element\n4. Draw\n"
-            << "5. Write data to file\n6. Create structure from file\n7. Exit\n";
+            << "5. Include file\n6. Create structure from included file\n7. Exit\n";
         std::cin >> tempChoice;
 
         switch (tempChoice) {
@@ -230,14 +230,12 @@ void DoublyLinkedList<T>::menu() {
                 displayList();
                 break;
             case 5:
-                this->fileManager->manualWriteToFile();
+                this->fileManager->openManualData();
                 break;
             case 6:
                 this->createStructure();
                 break;
             case 7:
-                exit(0);
-            default:
                 return;
         }
     }
@@ -251,7 +249,7 @@ void DoublyLinkedList<T>::createStructure() {
 
     for(int i = 0; i < dataSize; i++){
         element = this->fileManager->readManualData();
-        this->addFront(element);
+        this->addEnd(element);
     }
 }
 
